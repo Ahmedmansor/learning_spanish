@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:learning_spanish/core/utils/navigation.dart';
 import 'package:learning_spanish/core/widgets/custom_button.dart';
+import 'package:learning_spanish/views/discover/presentation/views/widgets/see_all_education_screen.dart';
+import 'package:learning_spanish/views/discover/presentation/views/widgets/single_education_navigate_to.dart';
 
 import '../../../../core/utils/app_settings.dart';
 import '../../../../repos/colors.dart';
 import '../../data/models/education_item_model.dart';
 import 'widgets/education_listview_item.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class DiscoverScreenView extends StatelessWidget {
+  const DiscoverScreenView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +42,10 @@ class HomeScreen extends StatelessWidget {
                   child: CustomGeneralButton(
                     text: 'See All',
                     textColor: secondColor,
-                    onTap: () {},
+                    onTap: () {
+                      NavigationUtils.goTo(
+                          context, const SeeAllEducationScreen());
+                    },
                     color: Colors.grey[700],
                   ),
                 ),
@@ -57,7 +63,14 @@ class HomeScreen extends StatelessWidget {
                     return EducationListViewItem(
                       title: educationItems[index].title,
                       image: educationItems[index].image,
-                      onTap: () {},
+                      onTap: () {
+                        NavigationUtils.goTo(
+                            context,
+                            SingleEducationNavigateTo(
+                              title: educationItems[index].title,
+                              words: educationItems[index].words,
+                            ));
+                      },
                     );
                   }),
             ),
