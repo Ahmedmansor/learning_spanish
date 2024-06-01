@@ -7,41 +7,103 @@ class TranslateScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var cubit = TranslationCubit.get(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Translation'),
         centerTitle: true,
         leading: const Icon(Icons.translate),
       ),
-      body: Card(
-        margin: const EdgeInsets.all(12),
-        child: ListView(padding: const EdgeInsets.all(20), children: [
-          const Text('English (US)'),
+      body: BlocBuilder<TranslationCubit, TranslationState>(
+        builder: (context, state) {
+          return _translationBody(cubit, context);
+        },
+      ),
+    );
+  }
+
+  Card _translationBody(TranslationCubit cubit, BuildContext context) {
+    return Card(
+      elevation: 0,
+      margin: const EdgeInsets.symmetric(horizontal: 12),
+      child: ListView(
+        padding: const EdgeInsets.all(20),
+        children: [
+          CustomRow(
+              text: cubit.from == 'en' ? 'English' : 'Espanol',
+              onPressed: () {
+                cubit.swapLanguages();
+              },
+              icon: Icons.swap_horiz_outlined),
           const SizedBox(height: 10),
           TextField(
-            style: const TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
-            decoration: const InputDecoration(
-                hintText: 'Enter Text ', border: InputBorder.none),
-            onChanged: (value) async {
-              TranslationCubit.get(context).translate(value);
+            maxLines: 2,
+            controller: cubit.textEditingController,
+            style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            decoration: InputDecoration(
+                suffixIcon: IconButton(
+                    onPressed: cubit.translated == ''
+                        ? null
+                        : () {
+                            cubit.clear();
+                          },
+                    icon: const Icon(Icons.highlight_remove_rounded)),
+                hintText: cubit.from == 'en' ? 'Enter Text' : 'Ingrese Texto',
+                border: InputBorder.none),
+            onChanged: (text) async {
+              TranslationCubit.get(context)
+                  .translate(text, cubit.from, cubit.to);
             },
           ),
           const Divider(
             height: 32,
           ),
-          const Text('Espanol '),
-          const SizedBox(height: 10),
-          BlocBuilder<TranslationCubit, TranslationState>(
-            builder: (context, state) {
-              return Text(
-                TranslationCubit.get(context).translated,
-                style:
-                    const TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
-              );
-            },
+          CustomRow(
+            text: cubit.to == 'es' ? 'Espanol' : 'English',
+            icon: Icons.copy,
+            onPressed: cubit.translated == ''
+                ? null
+                : () {
+                    cubit.copyToClipBoard();
+                  },
           ),
-        ]),
+          const SizedBox(height: 10),
+          Text(
+            cubit.translated,
+            style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 10),
+        ],
       ),
+    );
+  }
+}
+
+class CustomRow extends StatelessWidget {
+  const CustomRow({
+    super.key,
+    required this.text,
+    required this.icon,
+    required this.onPressed,
+  });
+
+  final String text;
+  final IconData? icon;
+  final void Function()? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(text),
+        IconButton(
+            onPressed: onPressed,
+            icon: Icon(
+              icon,
+              size: 40,
+            ))
+      ],
     );
   }
 }

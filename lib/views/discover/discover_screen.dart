@@ -8,6 +8,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.indigo,
         appBar: AppBar(
           centerTitle: true,
           title: const Text(

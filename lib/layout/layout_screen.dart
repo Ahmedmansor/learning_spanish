@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:learning_spanish/core/utils/app_theme.dart';
 import 'package:molten_navigationbar_flutter/molten_navigationbar_flutter.dart';
 import 'cubit/layout_cubit.dart';
 
@@ -11,24 +12,29 @@ class LayoutScreen extends StatelessWidget {
     return BlocBuilder<LayoutCubit, LayoutState>(
       builder: (context, state) {
         return Scaffold(
-          // appBar: AppBar(
-
-          //   actions: [
-          //     Switch(
-          //       value: LayoutCubit.get(context).isDark,
-          //       onChanged: (value) {
-          //         LayoutCubit.get(context).changeTheme();
-          //       },
-          //     ),
-          //   ],
-          // ),
+          appBar: AppBar(
+            actions: [
+              Switch(
+                value: LayoutCubit.get(context).isDark,
+                onChanged: (value) {
+                  LayoutCubit.get(context).changeTheme();
+                },
+              ),
+            ],
+          ),
           body:
               LayoutCubit.get(context).screens[LayoutCubit.get(context).index],
           bottomNavigationBar: MoltenBottomNavigationBar(
-            barColor: const Color(0xffF7F7F9),
-            domeCircleColor: Colors.black,
-            borderSize: 50,
-            domeHeight: 25,
+            // barColor: const Color(0xffF7F7F9),
+            borderColor:
+                LayoutCubit.get(context).isDark ? Colors.white : Colors.grey,
+            domeCircleColor: Colors.black87,
+            borderSize: 2,
+            domeCircleSize: 50,
+            domeHeight: 15,
+            barHeight: 60,
+            domeWidth: 100,
+            margin: const EdgeInsets.only(bottom: 5, left: 5, right: 5),
             selectedIndex: LayoutCubit.get(context).index,
             onTabChange: (clickedIndex) {
               LayoutCubit.get(context).changeScreen(clickedIndex);
@@ -41,7 +47,6 @@ class LayoutScreen extends StatelessWidget {
                 ),
                 title: const Text(
                   'Discover',
-                  style: TextStyle(color: Colors.black),
                 ),
               ),
               MoltenTab(
@@ -51,7 +56,6 @@ class LayoutScreen extends StatelessWidget {
                 ),
                 title: const Text(
                   'translation',
-                  style: TextStyle(color: Colors.black),
                 ),
               ),
             ],
