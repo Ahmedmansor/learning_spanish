@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:learning_spanish/core/widgets/custom_button.dart';
 
-import '../../core/utils/app_settings.dart';
-import '../../repos/colors.dart';
+import '../../../../core/utils/app_settings.dart';
+import '../../../../repos/colors.dart';
+import '../../data/models/education_item_model.dart';
+import 'widgets/education_listview_item.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -44,26 +46,20 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
             AppSettings.heightSpace(amountHeight: .01),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey[700],
-                    borderRadius: BorderRadius.circular(16),
-                    image: const DecorationImage(
-                        image: AssetImage('assets/images/image1.jpg'),
-                        fit: BoxFit.cover),
-                  ),
-                  width: AppSettings.width,
-                  height: AppSettings.height * .25,
-                ),
-                AppSettings.heightSpace(amountHeight: .005),
-                const Text(
-                  ' School',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                )
-              ],
+            SizedBox(
+              height: AppSettings.height * .35,
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  // physics: const NeverScrollableScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: educationItems.length,
+                  itemBuilder: (context, index) {
+                    return EducationListViewItem(
+                      title: educationItems[index].title,
+                      image: educationItems[index].image,
+                      onTap: () {},
+                    );
+                  }),
             ),
           ]),
     );
