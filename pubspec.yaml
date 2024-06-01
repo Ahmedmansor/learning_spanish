@@ -13,6 +13,7 @@ dependencies:
   flutter_bloc: ^8.1.5
   molten_navigationbar_flutter: ^1.0.1
   page_transition: ^2.1.0
+  translator: ^1.0.0
 
 dev_dependencies:
   flutter_lints: ^3.0.0

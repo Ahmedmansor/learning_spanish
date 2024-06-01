@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:learning_spanish/views/home/discover_screen.dart';
+import 'package:learning_spanish/views/discover/discover_screen.dart';
 import '../../views/translate/translate_screen.dart';
 part 'layout_state.dart';
 
