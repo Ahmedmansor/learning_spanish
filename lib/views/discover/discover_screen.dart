@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:learning_spanish/core/widgets/custom_button.dart';
 
 import '../../core/utils/app_settings.dart';
+import '../../repos/colors.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -34,11 +35,12 @@ class HomeScreen extends StatelessWidget {
                     width: AppSettings.width * .2,
                     child: CustomGeneralButton(
                       text: 'See All',
+                      textColor: secondColor,
                       onTap: () {},
                       color: Colors.grey[700],
                     )),
               ],
-            )
+            ),
           ]),
     );
   }

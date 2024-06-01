@@ -29,11 +29,11 @@ class LayoutScreen extends StatelessWidget {
                 ? Colors.transparent
                 : Colors.white,
             borderColor:
-                LayoutCubit.get(context).isDark ? Colors.white : Colors.grey,
+                LayoutCubit.get(context).isDark ? Colors.white : Colors.black,
             domeCircleColor: LayoutCubit.get(context).isDark
                 ? Colors.transparent
                 : Colors.black,
-            borderSize: 2,
+            borderSize: 0.1,
             domeCircleSize: 50,
             domeHeight: 15,
             barHeight: 60,
@@ -45,6 +45,8 @@ class LayoutScreen extends StatelessWidget {
             },
             tabs: [
               MoltenTab(
+                // selectedColor: Colors.white,
+                // unselectedColor: Colors.grey,
                 icon: const Icon(
                   Icons.explore,
                   size: 35,
