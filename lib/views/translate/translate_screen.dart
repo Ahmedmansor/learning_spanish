@@ -9,6 +9,7 @@ class TranslateScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var cubit = TranslationCubit.get(context);
     return Scaffold(
+      // backgroundColor: Colors.black,
       appBar: AppBar(
         title: const Text('Translation'),
         centerTitle: true,
@@ -24,6 +25,7 @@ class TranslateScreen extends StatelessWidget {
 
   Card _translationBody(TranslationCubit cubit, BuildContext context) {
     return Card(
+      color: Colors.transparent,
       elevation: 0,
       margin: const EdgeInsets.symmetric(horizontal: 12),
       child: ListView(

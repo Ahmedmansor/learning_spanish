@@ -1,6 +1,6 @@
+import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:learning_spanish/core/utils/app_theme.dart';
 import 'package:molten_navigationbar_flutter/molten_navigationbar_flutter.dart';
 import 'cubit/layout_cubit.dart';
 
@@ -25,10 +25,14 @@ class LayoutScreen extends StatelessWidget {
           body:
               LayoutCubit.get(context).screens[LayoutCubit.get(context).index],
           bottomNavigationBar: MoltenBottomNavigationBar(
-            // barColor: const Color(0xffF7F7F9),
+            barColor: LayoutCubit.get(context).isDark
+                ? Colors.transparent
+                : Colors.white,
             borderColor:
                 LayoutCubit.get(context).isDark ? Colors.white : Colors.grey,
-            domeCircleColor: Colors.black87,
+            domeCircleColor: LayoutCubit.get(context).isDark
+                ? Colors.transparent
+                : Colors.black,
             borderSize: 2,
             domeCircleSize: 50,
             domeHeight: 15,
