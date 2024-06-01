@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 import '../../../../../core/utils/app_settings.dart';
 import '../../../data/models/education_item_model.dart';
@@ -32,7 +33,7 @@ class SingleEducationNavigateTo extends StatelessWidget {
 }
 
 class SingleEducationListViewItem extends StatelessWidget {
-  const SingleEducationListViewItem({
+  SingleEducationListViewItem({
     super.key,
     required this.words,
     required this.index,
@@ -41,6 +42,10 @@ class SingleEducationListViewItem extends StatelessWidget {
   final List<Map> words;
 
   final int index;
+  FlutterTts flutterTts = FlutterTts();
+  speak() async {
+    await flutterTts.speak(words[index]['english']);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +55,10 @@ class SingleEducationListViewItem extends StatelessWidget {
         Text(words[index]['english']),
         Text(words[index]['espanol']),
         IconButton(
-            onPressed: () {}, icon: const Icon(Icons.headset_mic_outlined)),
+            onPressed: () async {
+              await speak();
+            },
+            icon: const Icon(Icons.headset_mic_outlined)),
       ],
     );
   }
