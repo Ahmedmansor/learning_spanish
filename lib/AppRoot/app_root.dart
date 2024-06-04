@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:learning_spanish/core/utils/app_settings.dart';
 import 'package:learning_spanish/cubits/translation/cubit/translation_cubit.dart';
 import 'package:learning_spanish/layout/cubit/layout_cubit.dart';
+import 'package:learning_spanish/repos/flutter_tts.dart';
 
+import '../cubits/settings/cubit/settings_cubit.dart';
+import '../cubits/single_education_navigate_to/cubit/single_education_navigate_to_cubit.dart';
 import '../layout/layout_screen.dart';
-import '../core/utils/app_settings.dart';
 import '../core/utils/app_theme.dart';
 
 class AppRoot extends StatelessWidget {
@@ -21,6 +24,12 @@ class AppRoot extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => TranslationCubit(),
+        ),
+        BlocProvider(
+          create: (context) => SettingsCubit()..initTts(),
+        ),
+        BlocProvider(
+          create: (context) => SingleEducationNavigateToCubit(),
         ),
       ],
       child: BlocBuilder<LayoutCubit, LayoutState>(

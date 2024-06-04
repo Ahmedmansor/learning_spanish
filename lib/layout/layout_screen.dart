@@ -64,6 +64,15 @@ class LayoutScreen extends StatelessWidget {
                   'translation',
                 ),
               ),
+              MoltenTab(
+                icon: const Icon(
+                  Icons.settings,
+                  size: 35,
+                ),
+                title: const Text(
+                  'Settings',
+                ),
+              ),
             ],
           ),
         );

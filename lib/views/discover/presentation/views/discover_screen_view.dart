@@ -41,7 +41,8 @@ class DiscoverScreenView extends StatelessWidget {
                   width: AppSettings.width * .2,
                   child: CustomGeneralButton(
                     text: 'See All',
-                    textColor: secondColor,
+                    fontSize: 16,
+                    textColor: kMainColor,
                     onTap: () {
                       NavigationUtils.goTo(
                           context, const SeeAllEducationScreen());

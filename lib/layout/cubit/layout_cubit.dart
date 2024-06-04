@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learning_spanish/views/discover/presentation/views/discover_screen_view.dart';
+import 'package:learning_spanish/views/settings/settings_screen.dart';
 import '../../views/translate/translate_screen.dart';
 part 'layout_state.dart';
 
@@ -13,6 +14,7 @@ class LayoutCubit extends Cubit<LayoutState> {
   List<Widget> screens = const [
     DiscoverScreenView(),
     TranslateScreen(),
+    SettingScreen(),
   ];
 
   void changeScreen(i) {
