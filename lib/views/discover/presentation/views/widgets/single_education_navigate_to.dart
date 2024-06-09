@@ -1,13 +1,13 @@
-import 'dart:math';
-
-import 'package:animated_icon/animated_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learning_spanish/core/utils/navigation.dart';
 import 'package:learning_spanish/core/widgets/custom_button.dart';
-import 'package:learning_spanish/cubits/settings/cubit/settings_cubit.dart';
+import 'package:learning_spanish/views/discover/presentation/views/quiz_view.dart';
 import 'package:learning_spanish/views/settings/settings_screen.dart';
+import 'package:rive_animated_icon/rive_animated_icon.dart';
+// import 'package:rive_animated_icon/rive_animated_icon.dart';
 import '../../../../../core/utils/app_settings.dart';
+import '../../../../../cubits/settings/cubit/settings_cubit.dart';
 import '../../../../../cubits/single_education_navigate_to/cubit/single_education_navigate_to_cubit.dart';
 import '../../../../../repos/colors.dart';
 
@@ -22,6 +22,7 @@ class SingleEducationNavigateTo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var cubit = SingleEducationNavigateToCubit.get(context);
     return Scaffold(
         bottomNavigationBar: Container(
           width: AppSettings.width,
@@ -35,18 +36,34 @@ class SingleEducationNavigateTo extends StatelessWidget {
           child: Padding(
             padding:
                 const EdgeInsets.only(bottom: 16, left: 8, right: 8, top: 16),
-            child: CustomGeneralButton(
-              textColor: Colors.black,
-              color: kMainColor,
-              radius: 8,
-              text: 'Start Quiz',
-              onTap: () {
-                null;
+            child: BlocBuilder<SingleEducationNavigateToCubit,
+                SingleEducationNavigateToState>(
+              builder: (context, state) {
+                return CustomGeneralButton(
+                  textColor: Colors.black,
+                  color: kMainColor,
+                  radius: 8,
+                  text: cubit.selectedQuestions.length < 3
+                      ? 'Please Select 3 Words at Least'
+                      : 'Start Quiz',
+                  onTap: () {
+                    cubit.selectedQuestions.isEmpty ||
+                            cubit.selectedQuestions.length < 3
+                        ? null
+                        : NavigationUtils.goTo(context, const QuizView());
+                  },
+                );
               },
             ),
           ),
         ),
         appBar: AppBar(
+          leading: IconButton(
+              onPressed: () {
+                NavigationUtils.offScreen(context);
+                cubit.clearSelectedQuestions();
+              },
+              icon: const Icon(Icons.arrow_back_ios_new)),
           centerTitle: true,
           title: Text(
             title,
@@ -131,7 +148,7 @@ class SingleEducationListViewItem extends StatelessWidget {
                 SingleEducationNavigateToState>(
               builder: (context, state) {
                 return CheckBox(
-                  value: singleEducationNavigateToCubit.selectedValues
+                  value: singleEducationNavigateToCubit.selectedQuestions
                       .contains(words[index]['espanol']),
                   onChanged: (newValue) {
                     singleEducationNavigateToCubit.updateValue(
@@ -140,31 +157,43 @@ class SingleEducationListViewItem extends StatelessWidget {
                 );
               },
             ),
+            // GestureDetector(
+            //   child: const Icon(
+            //     Icons.mic,
+            //     size: 35,
+            //   ),
+            //   onLongPress: () async {
+            //     BlocProvider.of<SettingsCubit>(context).setSpeed(0.1);
+            //     BlocProvider.of<SettingsCubit>(context)
+            //         .speak(words[index]['espanol']);
+            //   },
+            //   onTap: () async {
+            //     // await FlutterTts.speak(words[index]['espanol']);
+            //     BlocProvider.of<SettingsCubit>(context).setSpeed(0.5);
+
+            //     BlocProvider.of<SettingsCubit>(context)
+            //         .speak(words[index]['espanol']);
+            //   },
+            // ),
             GestureDetector(
-              child: const Icon(
-                Icons.mic,
-                size: 35,
-              ),
-              onLongPress: () async {
+              onLongPress: () {
                 BlocProvider.of<SettingsCubit>(context).setSpeed(0.1);
                 BlocProvider.of<SettingsCubit>(context)
                     .speak(words[index]['espanol']);
               },
-              onTap: () async {
-                // await FlutterTts.speak(words[index]['espanol']);
-                BlocProvider.of<SettingsCubit>(context).setSpeed(0.5);
+              child: RiveAnimatedIcon(
+                  riveIcon: RiveIcon.audio,
+                  width: 50,
+                  height: 50,
+                  color: kMainColor,
+                  loopAnimation: false,
+                  onTap: () {
+                    BlocProvider.of<SettingsCubit>(context).setSpeed(0.5);
 
-                BlocProvider.of<SettingsCubit>(context)
-                    .speak(words[index]['espanol']);
-              },
-            ),
-            AnimateIcon(
-              key: UniqueKey(),
-              onTap: () {},
-              iconType: IconType.animatedOnTap,
-              height: 70,
-              width: 70,
-              animateIcon: AnimateIcons.vomited,
+                    BlocProvider.of<SettingsCubit>(context)
+                        .speak(words[index]['espanol']);
+                  },
+                  onHover: (value) {}),
             ),
           ],
         ),

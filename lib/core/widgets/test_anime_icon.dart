@@ -48,3 +48,21 @@
 //         ));
 //   }
 // }
+//---------------------------------------------
+  // animated_icon: ^0.0.9
+  // AnimateIcon(
+  //               key: UniqueKey(),
+  //               onTap: () {
+  //                 BlocProvider.of<SettingsCubit>(context).setSpeed(0.5);
+
+  //                 BlocProvider.of<SettingsCubit>(context)
+  //                     .speak(words[index]['espanol']);
+  //               },
+  //               iconType: IconType.animatedOnTap,
+  //               height: 70,
+  //               width: 70,
+  //               animateIcon: AnimateIcons.wink,
+  //               color: kMainColor,
+  //             ),
+//---------------------------------------------
+// rive_animated_icon: ^1.1.2

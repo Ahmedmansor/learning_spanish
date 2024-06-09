@@ -7,3 +7,6 @@ final class SingleEducationNavigateToInitial
     extends SingleEducationNavigateToState {}
 
 final class UpdateValueSucess extends SingleEducationNavigateToState {}
+
+final class ClearSelectedQuestionsSucess
+    extends SingleEducationNavigateToState {}

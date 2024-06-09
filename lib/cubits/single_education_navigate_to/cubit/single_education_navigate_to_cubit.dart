@@ -13,19 +13,25 @@ class SingleEducationNavigateToCubit
       BlocProvider.of(context);
 
   bool value = true;
-  List<String> selectedValues = [];
+  List<String> selectedQuestions = [];
 
   void updateValue(bool newValue, String word) {
     value = newValue;
 
     if (newValue == true) {
-      selectedValues.add(word);
+      selectedQuestions.add(word);
     } else {
-      selectedValues.remove(word);
+      selectedQuestions.remove(word);
     }
     emit(UpdateValueSucess());
-    debugPrint(selectedValues.length.toString());
-    debugPrint(selectedValues.toString());
+    debugPrint(selectedQuestions.length.toString());
+    debugPrint(selectedQuestions.toString());
+  }
+
+  void clearSelectedQuestions() {
+    selectedQuestions.clear();
+
+    emit(ClearSelectedQuestionsSucess());
   }
 }
     // if (newValue == true) {

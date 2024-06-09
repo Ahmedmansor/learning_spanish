@@ -2,9 +2,13 @@ class EducationItemModel {
   final String title;
   final String image;
   final List<Map> words;
+  final List<String> answers;
 
   EducationItemModel(
-      {required this.title, required this.image, required this.words});
+      {required this.title,
+      required this.image,
+      required this.words,
+      required this.answers});
 }
 
 List<EducationItemModel> educationItems = [
@@ -25,6 +29,7 @@ List<EducationItemModel> educationItems = [
         'espanol': 'papel',
       },
     ],
+    answers: ['book', 'history', 'paper'],
   ),
   EducationItemModel(
     title: 'high school',
@@ -43,6 +48,7 @@ List<EducationItemModel> educationItems = [
         'espanol': 'escribiendo',
       },
     ],
+    answers: ['to think', 'course', 'writing'],
   ),
   EducationItemModel(
     title: 'university',
@@ -61,5 +67,6 @@ List<EducationItemModel> educationItems = [
         'espanol': 'tesis',
       },
     ],
+    answers: ['tape', 'portofolio', 'thesis'],
   ),
 ];
