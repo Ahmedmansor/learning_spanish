@@ -1,7 +1,10 @@
-import 'package:bloc/bloc.dart';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meta/meta.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:learning_spanish/core/utils/navigation.dart';
+import 'package:vibration/vibration.dart';
 
 part 'single_education_navigate_to_state.dart';
 
@@ -12,6 +15,7 @@ class SingleEducationNavigateToCubit
   static SingleEducationNavigateToCubit get(context) =>
       BlocProvider.of(context);
 
+// add user Questions in selectedQuestions list
   bool value = true;
   List<String> selectedQuestions = [];
 
@@ -28,15 +32,147 @@ class SingleEducationNavigateToCubit
     debugPrint(selectedQuestions.toString());
   }
 
+  // Clear selected questions
   void clearSelectedQuestions() {
     selectedQuestions.clear();
+    currentQuestionIndex = 0;
 
     emit(ClearSelectedQuestionsSucess());
   }
+
+// get answers for selected questions
+  List<String> selectedAnswers = [];
+  getAnswersForSelectedQuestions({
+    required List<String> selectedQuestions,
+    required List<String> allQuestions,
+    required List<String> allAnswers,
+  }) {
+    // List<String> selectedAnswers = [];
+    for (String question in selectedQuestions) {
+      int index = allQuestions.indexOf(question);
+
+      if (index != -1) {
+        selectedAnswers.add(allAnswers[index]);
+      } else {
+        selectedAnswers.add("Answer not found");
+      }
+    }
+
+    // return selectedAnswers;
+    for (int i = 0; i < selectedQuestions.length; i++) {
+      debugPrint("Q: ${selectedQuestions[i]}");
+      debugPrint("A: ${selectedAnswers[i]}\n");
+      emit(GetAnswersForSelectedQuestionsSucess());
+    }
+  }
+
+// quiz functions
+  // String originalString = 'Hello World';
+  List<String> separatedChars = [];
+  List<TextEditingController> controllers = [];
+  List<int> emptyIndexes = [];
+  int currentQuestionIndex = 0;
+  List<FocusNode> focusNodes = [];
+
+  void prepareString() {
+    String originalString = selectedAnswers[currentQuestionIndex];
+
+    separatedChars = originalString.split('');
+
+    controllers = List.generate(
+        separatedChars.length, (index) => TextEditingController());
+
+// focusNodes to go to the next field
+    focusNodes = List.generate(separatedChars.length, (index) => FocusNode());
+
+    // Generate 3 random indexes to leave empty
+    Random random = Random();
+    emptyIndexes = [];
+    while (emptyIndexes.length < 3) {
+      int index = random.nextInt(separatedChars.length);
+      if (!emptyIndexes.contains(index) && separatedChars[index] != ' ') {
+        emptyIndexes.add(index);
+      }
+    }
+
+    for (int index in emptyIndexes) {
+      separatedChars[index] = '';
+    }
+    emit(PrepareStringStateSucess());
+  }
+
+  // check answer
+  void checkAnswer() {
+    bool isCorrect = true;
+    String originalString = selectedAnswers[currentQuestionIndex];
+
+    for (int index in emptyIndexes) {
+      if (controllers[index].text != originalString[index]) {
+        isCorrect = false;
+        break;
+      }
+    }
+
+    if (isCorrect) {
+      if (currentQuestionIndex < selectedAnswers.length - 1) {
+        playCorrectSound();
+        emit(PrepareStringStateSucess());
+        currentQuestionIndex++;
+        prepareString();
+      } else {
+        finishQuiz();
+        debugPrint('you ara fnished');
+      }
+    } else {
+      debugPrint('try again');
+      _vibrate();
+      playWrongSound();
+    }
+  }
+
+//play sound when answer is correct
+  final AudioPlayer _audioPlayer = AudioPlayer();
+
+  Future<void> playCorrectSound() async {
+    try {
+      // Play the sound file from assets
+      await _audioPlayer.play(AssetSource('sounds/correctAnswer.mp3'));
+    } catch (e) {
+      debugPrint('Error playing sound: $e');
+    }
+  }
+//play sound when answer is wrong
+
+  Future<void> playWrongSound() async {
+    try {
+      // Play the sound file from assets
+      await _audioPlayer.play(AssetSource('sounds/wrongAnswer.mp3'));
+    } catch (e) {
+      debugPrint('Error playing sound: $e');
+    }
+  }
+
+  //play sound when click hint
+  Future<void> playHintSound() async {
+    try {
+      // Play the sound file from assets
+      await _audioPlayer.play(AssetSource('sounds/hintSound.mp3'));
+    } catch (e) {
+      debugPrint('Error playing sound: $e');
+    }
+  }
+
+  //vibrate
+  void _vibrate() async {
+    // Check if the device can vibrate
+    if (await Vibration.hasVibrator() ?? false) {
+      // Vibrate for 500 milliseconds
+      Vibration.vibrate(duration: 500);
+    }
+  }
+
+  //finish quiz
+  void finishQuiz() {
+    emit(FinishQuizStateSucess());
+  }
 }
-    // if (newValue == true) {
-    //           selectedValues.add(words[index]['espanol']);
-    //         } else {
-    //           selectedValues.remove(words[index]['espanol']);
-    //         }
-    //         debugPrint(selectedValues.length.toString());

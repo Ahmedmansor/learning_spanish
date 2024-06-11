@@ -16,9 +16,13 @@ class SingleEducationNavigateTo extends StatelessWidget {
     super.key,
     required this.title,
     required this.words,
+    required this.allquestionsList,
+    required this.allAnswersList,
   });
   final String title;
   final List<Map<dynamic, dynamic>> words;
+  final List<String> allquestionsList;
+  final List<String> allAnswersList;
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +51,19 @@ class SingleEducationNavigateTo extends StatelessWidget {
                       ? 'Please Select 3 Words at Least'
                       : 'Start Quiz',
                   onTap: () {
+                    SingleEducationNavigateToCubit.get(context)
+                        .getAnswersForSelectedQuestions(
+                            selectedQuestions: cubit.selectedQuestions,
+                            allQuestions: allquestionsList,
+                            allAnswers: allAnswersList);
+
                     cubit.selectedQuestions.isEmpty ||
                             cubit.selectedQuestions.length < 3
                         ? null
-                        : NavigationUtils.goTo(context, const QuizView());
+                        : NavigationUtils.goToAndOff(
+                            context, const CompleteStringQuizApp());
+
+                    SingleEducationNavigateToCubit.get(context).prepareString();
                   },
                 );
               },
@@ -58,12 +71,6 @@ class SingleEducationNavigateTo extends StatelessWidget {
           ),
         ),
         appBar: AppBar(
-          leading: IconButton(
-              onPressed: () {
-                NavigationUtils.offScreen(context);
-                cubit.clearSelectedQuestions();
-              },
-              icon: const Icon(Icons.arrow_back_ios_new)),
           centerTitle: true,
           title: Text(
             title,
@@ -149,10 +156,10 @@ class SingleEducationListViewItem extends StatelessWidget {
               builder: (context, state) {
                 return CheckBox(
                   value: singleEducationNavigateToCubit.selectedQuestions
-                      .contains(words[index]['espanol']),
+                      .contains(words[index]['english']),
                   onChanged: (newValue) {
                     singleEducationNavigateToCubit.updateValue(
-                        newValue!, words[index]['espanol']);
+                        newValue!, words[index]['english']);
                   },
                 );
               },
@@ -181,19 +188,25 @@ class SingleEducationListViewItem extends StatelessWidget {
                 BlocProvider.of<SettingsCubit>(context)
                     .speak(words[index]['espanol']);
               },
-              child: RiveAnimatedIcon(
-                  riveIcon: RiveIcon.audio,
-                  width: 50,
-                  height: 50,
-                  color: kMainColor,
-                  loopAnimation: false,
-                  onTap: () {
+              child: IconButton(
+                  onPressed: () {
                     BlocProvider.of<SettingsCubit>(context).setSpeed(0.5);
-
                     BlocProvider.of<SettingsCubit>(context)
                         .speak(words[index]['espanol']);
                   },
-                  onHover: (value) {}),
+                  icon: const Icon(Icons.record_voice_over_outlined)),
+              // child: RiveAnimatedIcon(
+              //   riveIcon: RiveIcon.audio,
+              //   width: 50,
+              //   height: 50,
+              //   color: kMainColor,
+              //   loopAnimation: false,
+              //   onTap: () {
+              //     BlocProvider.of<SettingsCubit>(context).setSpeed(0.5);
+              //     BlocProvider.of<SettingsCubit>(context)
+              //         .speak(words[index]['espanol']);
+              //   },
+              // ),
             ),
           ],
         ),

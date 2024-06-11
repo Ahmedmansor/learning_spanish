@@ -6,6 +6,7 @@ import 'package:learning_spanish/views/discover/presentation/views/widgets/see_a
 import 'package:learning_spanish/views/discover/presentation/views/widgets/single_education_navigate_to.dart';
 
 import '../../../../core/utils/app_settings.dart';
+import '../../../../cubits/single_education_navigate_to/cubit/single_education_navigate_to_cubit.dart';
 import '../../../../repos/colors.dart';
 import '../../data/models/education_item_model.dart';
 import 'widgets/education_listview_item.dart';
@@ -15,6 +16,8 @@ class DiscoverScreenView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var singleEducationNavigateToCubit =
+        SingleEducationNavigateToCubit.get(context);
     return Scaffold(
       // backgroundColor: Colors.black,
       appBar: AppBar(
@@ -70,7 +73,12 @@ class DiscoverScreenView extends StatelessWidget {
                             SingleEducationNavigateTo(
                               title: educationItems[index].title,
                               words: educationItems[index].words,
+                              allquestionsList: educationItems[index].questions,
+                              allAnswersList: educationItems[index].answers,
                             ));
+                        // NavigationUtils.offScreen(context);
+                        singleEducationNavigateToCubit.clearSelectedQuestions();
+                        singleEducationNavigateToCubit.selectedAnswers.clear();
                       },
                     );
                   }),

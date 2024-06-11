@@ -10,3 +10,12 @@ final class UpdateValueSucess extends SingleEducationNavigateToState {}
 
 final class ClearSelectedQuestionsSucess
     extends SingleEducationNavigateToState {}
+
+//-----------------------------------------------------------------------------
+final class GetAnswersForSelectedQuestionsSucess
+    extends SingleEducationNavigateToState {}
+
+final class PrepareStringStateSucess extends SingleEducationNavigateToState {}
+
+//-----------------------------------------------------------------------------
+final class FinishQuizStateSucess extends SingleEducationNavigateToState {}

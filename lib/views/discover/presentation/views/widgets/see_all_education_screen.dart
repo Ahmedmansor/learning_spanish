@@ -31,6 +31,8 @@ class SeeAllEducationScreen extends StatelessWidget {
                     SingleEducationNavigateTo(
                       title: educationItems[index].title,
                       words: educationItems[index].words,
+                      allAnswersList: educationItems[index].answers,
+                      allquestionsList: educationItems[index].questions,
                     ));
               },
             );

@@ -7,17 +7,21 @@ environment:
   sdk: '>=3.4.0 <4.0.0'
 
 dependencies:
+  audioplayers: ^6.0.0
   bloc: ^8.1.4
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.5
+  flutter_stepindicator: ^0.1.7
   flutter_tts: ^4.0.2
   fluttertoast: ^8.1.0
   molten_navigationbar_flutter: ^1.0.1
   page_transition: ^2.1.0
-  translator: ^1.0.0
   rive_animated_icon: ^1.1.2
-
+  translator: ^1.0.0
+  vibration: ^1.9.0
+  youtube_explode_dart: ^2.2.1
+  youtube_player_flutter: ^9.0.1
 
 dev_dependencies:
   flutter_lints: ^3.0.0
@@ -28,3 +32,6 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/sounds/correctAnswer.mp3
+    - assets/sounds/wrongAnswer.mp3
+    - assets/sounds/hintSound.mp3
