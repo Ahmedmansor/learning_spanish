@@ -7,6 +7,7 @@ import 'package:learning_spanish/repos/flutter_tts.dart';
 
 import '../cubits/settings/cubit/settings_cubit.dart';
 import '../cubits/single_education_navigate_to/cubit/single_education_navigate_to_cubit.dart';
+import '../cubits/you_tube_player_screen/cubit/you_tube_player_screen_cubit.dart';
 import '../layout/layout_screen.dart';
 import '../core/utils/app_theme.dart';
 
@@ -31,6 +32,7 @@ class AppRoot extends StatelessWidget {
         BlocProvider(
           create: (context) => SingleEducationNavigateToCubit(),
         ),
+        BlocProvider(create: (context) => YouTubePlayerScreenCubit()),
       ],
       child: BlocBuilder<LayoutCubit, LayoutState>(
         builder: (context, state) {
