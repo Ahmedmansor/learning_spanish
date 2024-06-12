@@ -75,6 +75,7 @@ class DiscoverScreenView extends StatelessWidget {
                               words: educationItems[index].words,
                               allquestionsList: educationItems[index].questions,
                               allAnswersList: educationItems[index].answers,
+                              videoId: educationItems[index].videoId,
                             ));
                         // NavigationUtils.offScreen(context);
                         singleEducationNavigateToCubit.clearSelectedQuestions();

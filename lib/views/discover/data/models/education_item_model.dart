@@ -4,7 +4,7 @@ class EducationItemModel {
   final List<Map> words;
   final List<String> answers;
   final List<String> questions;
-  final String? videoUrl;
+  final String? videoId;
 
   EducationItemModel({
     required this.title,
@@ -12,7 +12,7 @@ class EducationItemModel {
     required this.words,
     required this.answers,
     required this.questions,
-    required this.videoUrl,
+    required this.videoId,
   });
 }
 
@@ -36,7 +36,7 @@ List<EducationItemModel> educationItems = [
     ],
     questions: ['book', 'history', 'paper'],
     answers: ['libro', 'historia', 'papel'],
-    videoUrl: null,
+    videoId: 'gTMyBHJ4x7g',
   ),
   EducationItemModel(
     title: 'high school',
@@ -57,7 +57,7 @@ List<EducationItemModel> educationItems = [
     ],
     questions: ['to think', 'course', 'writing'],
     answers: ['pensar', 'curso', 'escribiendo'],
-    videoUrl: null,
+    videoId: null,
   ),
   EducationItemModel(
     title: 'university',
@@ -78,6 +78,6 @@ List<EducationItemModel> educationItems = [
     ],
     questions: ['tape', 'portofolio', 'thesis'],
     answers: ['cinta', 'portafolio', 'tesis'],
-    videoUrl: null,
+    videoId: null,
   ),
 ];

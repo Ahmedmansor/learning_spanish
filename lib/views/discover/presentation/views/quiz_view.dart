@@ -14,8 +14,17 @@ class CompleteStringQuizApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // var cubit = SingleEducationNavigateToCubit.get(context);
-    return const Scaffold(
-      body: CompleteStringQuizScreen(),
+    return PopScope(
+      canPop: true,
+      onPopInvoked: (didPop) {
+        SingleEducationNavigateToCubit.get(context).selectedAnswers = [];
+        SingleEducationNavigateToCubit.get(context).currentQuestionIndex = 0;
+
+        debugPrint('selectedAnswers = []');
+      },
+      child: const Scaffold(
+        body: CompleteStringQuizScreen(),
+      ),
     );
   }
 }
@@ -31,6 +40,9 @@ class CompleteStringQuizScreen extends StatelessWidget {
           SingleEducationNavigateToState>(
         listener: (context, state) {
           if (state is FinishQuizStateSucess) {
+            cubit.selectedAnswers = [];
+            cubit.currentQuestionIndex = 0;
+
             Navigator.pop(context);
           }
         },
@@ -131,7 +143,8 @@ class CompleteStringQuizScreen extends StatelessWidget {
                   SizedBox(
                     width: AppSettings.width * 0.16,
                     child: CustomGeneralButton(
-                      radius: 5,
+                      // radius: 5,
+                      borderRadius: BorderRadius.circular(5),
                       text: 'Hint',
                       color: kMainColor.withOpacity(0.3),
                       onTap: () {
@@ -145,7 +158,9 @@ class CompleteStringQuizScreen extends StatelessWidget {
                   SizedBox(
                     width: AppSettings.width * 0.5,
                     child: CustomGeneralButton(
-                      radius: 15,
+                      // radius: 16,
+                      borderRadius: BorderRadius.circular(16),
+
                       text: 'Next',
                       onTap: SingleEducationNavigateToCubit.get(context)
                           .checkAnswer,

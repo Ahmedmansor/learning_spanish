@@ -11,23 +11,24 @@ class CustomGeneralButton extends StatelessWidget {
       this.color = kMainColor,
       this.height = 40,
       this.textColor = Colors.white,
-      this.radius = 50,
-      this.fontSize = 18});
+      // this.radius = 50,
+      this.fontSize = 18,
+      this.borderRadius = const BorderRadius.all(Radius.circular(8))});
   final String? text;
   final GestureTapCallback? onTap;
   final Color? color;
   final double? height;
   final Color? textColor;
-  final double radius;
+  // final double radius;
   final double? fontSize;
+  final BorderRadiusGeometry borderRadius;
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
       onPressed: onTap,
       height: height,
       minWidth: AppSettings.width,
-      shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius)),
+      shape: RoundedRectangleBorder(borderRadius: borderRadius),
       color: color,
       child: Text(
         text!,

@@ -4,12 +4,13 @@ import 'package:learning_spanish/core/utils/navigation.dart';
 import 'package:learning_spanish/core/widgets/custom_button.dart';
 import 'package:learning_spanish/views/discover/presentation/views/quiz_view.dart';
 import 'package:learning_spanish/views/settings/settings_screen.dart';
-import 'package:rive_animated_icon/rive_animated_icon.dart';
+// import 'package:rive_animated_icon/rive_animated_icon.dart';
 // import 'package:rive_animated_icon/rive_animated_icon.dart';
 import '../../../../../core/utils/app_settings.dart';
 import '../../../../../cubits/settings/cubit/settings_cubit.dart';
 import '../../../../../cubits/single_education_navigate_to/cubit/single_education_navigate_to_cubit.dart';
 import '../../../../../repos/colors.dart';
+import 'youtube_player_screen_view.dart';
 
 class SingleEducationNavigateTo extends StatelessWidget {
   const SingleEducationNavigateTo({
@@ -18,57 +19,23 @@ class SingleEducationNavigateTo extends StatelessWidget {
     required this.words,
     required this.allquestionsList,
     required this.allAnswersList,
+    this.videoId,
   });
   final String title;
   final List<Map<dynamic, dynamic>> words;
   final List<String> allquestionsList;
   final List<String> allAnswersList;
+  final String? videoId;
 
   @override
   Widget build(BuildContext context) {
     var cubit = SingleEducationNavigateToCubit.get(context);
     return Scaffold(
-        bottomNavigationBar: Container(
-          width: AppSettings.width,
-          decoration: BoxDecoration(
-            color: Colors.grey[700],
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(8),
-              topRight: Radius.circular(8),
-            ),
-          ),
-          child: Padding(
-            padding:
-                const EdgeInsets.only(bottom: 16, left: 8, right: 8, top: 16),
-            child: BlocBuilder<SingleEducationNavigateToCubit,
-                SingleEducationNavigateToState>(
-              builder: (context, state) {
-                return CustomGeneralButton(
-                  textColor: Colors.black,
-                  color: kMainColor,
-                  radius: 8,
-                  text: cubit.selectedQuestions.length < 3
-                      ? 'Please Select 3 Words at Least'
-                      : 'Start Quiz',
-                  onTap: () {
-                    SingleEducationNavigateToCubit.get(context)
-                        .getAnswersForSelectedQuestions(
-                            selectedQuestions: cubit.selectedQuestions,
-                            allQuestions: allquestionsList,
-                            allAnswers: allAnswersList);
-
-                    cubit.selectedQuestions.isEmpty ||
-                            cubit.selectedQuestions.length < 3
-                        ? null
-                        : NavigationUtils.goToAndOff(
-                            context, const CompleteStringQuizApp());
-
-                    SingleEducationNavigateToCubit.get(context).prepareString();
-                  },
-                );
-              },
-            ),
-          ),
+        bottomNavigationBar: BottomNavBar(
+          cubit: cubit,
+          allquestionsList: allquestionsList,
+          allAnswersList: allAnswersList,
+          videoId: videoId,
         ),
         appBar: AppBar(
           centerTitle: true,
@@ -115,6 +82,111 @@ class SingleEducationNavigateTo extends StatelessWidget {
             ],
           ),
         ));
+  }
+}
+
+class BottomNavBar extends StatelessWidget {
+  const BottomNavBar({
+    super.key,
+    required this.cubit,
+    required this.allquestionsList,
+    required this.allAnswersList,
+    this.videoId,
+  });
+
+  final SingleEducationNavigateToCubit cubit;
+  final List<String> allquestionsList;
+  final List<String> allAnswersList;
+  final String? videoId;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: AppSettings.width,
+      decoration: BoxDecoration(
+        color: Colors.grey[700],
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(8),
+          topRight: Radius.circular(8),
+        ),
+      ),
+      child: Padding(
+        padding:
+            const EdgeInsets.only(bottom: 16, left: 16, right: 16, top: 16),
+        child: BlocBuilder<SingleEducationNavigateToCubit,
+            SingleEducationNavigateToState>(
+          builder: (context, state) {
+            return Row(
+              children: [
+                Expanded(
+                  child: CustomGeneralButton(
+                    textColor: Colors.black,
+                    color: kMainColor,
+                    // radius: 8,
+                    borderRadius: videoId != null
+                        ? const BorderRadius.only(
+                            topLeft: Radius.circular(8),
+                            bottomLeft: Radius.circular(8))
+                        : BorderRadius.circular(8),
+
+                    text: 'Start Quiz',
+                    onTap: () {
+                      if (cubit.selectedQuestions.length < 3) {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                          content: Text(
+                            'Please Select 3 Words at Least',
+                          ),
+                          duration: Duration(seconds: 2),
+                        ));
+                      } else {
+                        SingleEducationNavigateToCubit.get(context)
+                            .getAnswersForSelectedQuestions(
+                                selectedQuestions: cubit.selectedQuestions,
+                                allQuestions: allquestionsList,
+                                allAnswers: allAnswersList);
+
+                        cubit.selectedQuestions.isEmpty ||
+                                cubit.selectedQuestions.length < 3
+                            ? null
+                            : NavigationUtils.goTo(
+                                context, const CompleteStringQuizApp());
+
+                        SingleEducationNavigateToCubit.get(context)
+                            .prepareString();
+                        cubit.currentQuestionIndex = 0;
+                        // cubit.selectedAnswers = [];
+                      }
+                    },
+                  ),
+                ),
+                if (videoId != null)
+                  Expanded(
+                    child: CustomGeneralButton(
+                      textColor: Colors.black,
+                      color: kMainColor,
+                      // radius: 8,
+                      borderRadius: const BorderRadius.only(
+                          topRight: Radius.circular(8),
+                          bottomRight: Radius.circular(8)),
+                      text: 'Watch Video',
+                      onTap: () {
+                        NavigationUtils.goTo(
+                            context,
+                            YouTubePlayerScreen(
+                              videoId: videoId!,
+                            ));
+
+                        cubit.playHintSound();
+                      },
+                    ),
+                  ),
+              ],
+            );
+          },
+        ),
+      ),
+    );
   }
 }
 
