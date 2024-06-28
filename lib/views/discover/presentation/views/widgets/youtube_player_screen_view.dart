@@ -1,12 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../../../../cubits/you_tube_player_screen/cubit/you_tube_player_screen_cubit.dart';
-
-// import '../../../../../cubits/you_tube_player_screen/cubit/you_tube_player_screen_cubit.dart';
 
 class YouTubePlayerScreen extends StatefulWidget {
   // var cubit = YouTubePlayerScreenCubit.get(context);
@@ -23,10 +19,6 @@ class YouTubePlayerScreen extends StatefulWidget {
 
 class _YouTubePlayerScreenState extends State<YouTubePlayerScreen> {
   late YoutubePlayerController _controller;
-  // List<ClosedCaption> subtitles = [];
-  // late Timer _timer;
-  // bool _isPlaying = false;
-  // bool _stopTimer = false;
 
   @override
   void initState() {
@@ -44,49 +36,9 @@ class _YouTubePlayerScreenState extends State<YouTubePlayerScreen> {
     cubit.loadSubtitles(widget.videoId);
   }
 
-  // void _onPlayerStateChanged() {
-  //   final isPlaying = _controller.value.playerState == PlayerState.playing;
-  //   if (isPlaying && !_isPlaying) {
-  //     _startSubtitleTimer();
-  //   } else if (!isPlaying && _isPlaying) {
-  //     _stopSubtitleTimer();
-  //   }
-  //   setState(() {
-  //     _isPlaying = isPlaying;
-  //   });
-  // }
   void _onPlayerStateChanged() {
     context.read<YouTubePlayerScreenCubit>().updatePlayerState(_controller);
   }
-
-  // void _startSubtitleTimer() {
-  //   _timer =
-  //       Timer.periodic(const Duration(milliseconds: 200), _updateSubtitles);
-  // }
-
-  // void _stopSubtitleTimer() {
-  //   _timer.cancel();
-  // }
-
-  // void _updateSubtitles(Timer timer) {
-  //   final currentPosition = _controller.value.position;
-  //   final index = context.read<YouTubePlayerScreenCubit>().subtitles.indexWhere(
-  //         (subtitle) =>
-  //             subtitle.duration <= currentPosition &&
-  //             currentPosition <= subtitle.end,
-  //       );
-  //   if (index != -1) {
-  //     _scrollController
-  //         .jumpTo(index * 57.0); // Adjust the scroll speed as neededa
-  //     if (context.read<YouTubePlayerScreenCubit>().subtitles.length - index <=
-  //         9) {
-  //       _stopTimer = true;
-  //       _stopSubtitleTimer();
-  //     }
-  //   }
-  // }
-
-  // final _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {

@@ -65,7 +65,7 @@ class SingleEducationNavigateTo extends StatelessWidget {
           child: ListView(
             children: [
               SizedBox(
-                height: AppSettings.height,
+                height: AppSettings.height * .8,
                 child: ListView.separated(
                   separatorBuilder: (context, index) {
                     return AppSettings.heightSpace(amountHeight: .01);
@@ -125,8 +125,8 @@ class BottomNavBar extends StatelessWidget {
                     // radius: 8,
                     borderRadius: videoId != null
                         ? const BorderRadius.only(
-                            topLeft: Radius.circular(8),
-                            bottomLeft: Radius.circular(8))
+                            // topLeft: Radius.circular(8),
+                            bottomLeft: Radius.circular(24))
                         : BorderRadius.circular(8),
 
                     text: 'Start Quiz',
@@ -167,8 +167,9 @@ class BottomNavBar extends StatelessWidget {
                       color: kMainColor,
                       // radius: 8,
                       borderRadius: const BorderRadius.only(
-                          topRight: Radius.circular(8),
-                          bottomRight: Radius.circular(8)),
+                        topRight: Radius.circular(24),
+                        // bottomRight: Radius.circular(8),
+                      ),
                       text: 'Watch Video',
                       onTap: () {
                         NavigationUtils.goTo(
@@ -208,16 +209,24 @@ class SingleEducationListViewItem extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          words[index]['english'],
-          style: const TextStyle(
-            fontSize: 20,
+        SizedBox(
+          width: AppSettings.width * .3,
+          child: Text(
+            words[index]['english'],
+            style: const TextStyle(
+              fontSize: 18,
+            ),
           ),
         ),
-        Text(
-          words[index]['espanol'],
-          style: const TextStyle(
-            fontSize: 20,
+        SizedBox(
+          width: AppSettings.width * .3,
+          child: Text(
+            words[index]['espanol'],
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.start,
           ),
         ),
         Row(

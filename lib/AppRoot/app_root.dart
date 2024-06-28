@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learning_spanish/core/utils/app_settings.dart';
+import 'package:learning_spanish/cubits/discover/cubit/discover_cubit.dart';
 import 'package:learning_spanish/cubits/translation/cubit/translation_cubit.dart';
 import 'package:learning_spanish/layout/cubit/layout_cubit.dart';
 import 'package:learning_spanish/repos/flutter_tts.dart';
 
+import '../cubits/discover/alphapet_animation/cubit/alphapet_animation_cubit.dart';
 import '../cubits/settings/cubit/settings_cubit.dart';
 import '../cubits/single_education_navigate_to/cubit/single_education_navigate_to_cubit.dart';
 import '../cubits/you_tube_player_screen/cubit/you_tube_player_screen_cubit.dart';
@@ -21,6 +23,9 @@ class AppRoot extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
+          create: (context) => DiscoverCubit(),
+        ),
+        BlocProvider(
           create: (context) => LayoutCubit(),
         ),
         BlocProvider(
@@ -33,6 +38,9 @@ class AppRoot extends StatelessWidget {
           create: (context) => SingleEducationNavigateToCubit(),
         ),
         BlocProvider(create: (context) => YouTubePlayerScreenCubit()),
+        BlocProvider(
+          create: (context) => AlpphapetAnimationCubit(),
+        ),
       ],
       child: BlocBuilder<LayoutCubit, LayoutState>(
         builder: (context, state) {

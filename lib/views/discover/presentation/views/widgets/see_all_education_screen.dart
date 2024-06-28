@@ -7,8 +7,10 @@ import 'package:learning_spanish/views/discover/presentation/views/widgets/singl
 import '../../../data/models/education_item_model.dart';
 
 class SeeAllEducationScreen extends StatelessWidget {
+  final List<EducationItemModel> educationItems;
   const SeeAllEducationScreen({
     super.key,
+    required this.educationItems,
   });
   @override
   Widget build(BuildContext context) {

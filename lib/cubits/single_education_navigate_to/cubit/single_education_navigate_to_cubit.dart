@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:learning_spanish/core/utils/navigation.dart';
+import 'package:remove_diacritic/remove_diacritic.dart';
 import 'package:vibration/vibration.dart';
 
 part 'single_education_navigate_to_state.dart';
@@ -15,7 +15,7 @@ class SingleEducationNavigateToCubit
   static SingleEducationNavigateToCubit get(context) =>
       BlocProvider.of(context);
 
-// add user Questions in selectedQuestions list
+// add user Questions in selectedQuestions list using check box
   bool value = true;
   List<String> selectedQuestions = [];
 
@@ -47,7 +47,6 @@ class SingleEducationNavigateToCubit
     required List<String> allQuestions,
     required List<String> allAnswers,
   }) {
-    // List<String> selectedAnswers = [];
     for (String question in selectedQuestions) {
       int index = allQuestions.indexOf(question);
 
@@ -66,29 +65,34 @@ class SingleEducationNavigateToCubit
     }
   }
 
-// quiz functions
+  // quiz functions
   // String originalString = 'Hello World';
   List<String> separatedChars = [];
   List<TextEditingController> controllers = [];
   List<int> emptyIndexes = [];
   int currentQuestionIndex = 0;
   List<FocusNode> focusNodes = [];
+  // List<String> selectedAnswers = []; // Add your list of answers here
 
   void prepareString() {
     String originalString = selectedAnswers[currentQuestionIndex];
-
     separatedChars = originalString.split('');
 
     controllers = List.generate(
         separatedChars.length, (index) => TextEditingController());
 
-// focusNodes to go to the next field
+    // focusNodes to go to the next field
     focusNodes = List.generate(separatedChars.length, (index) => FocusNode());
+
+    // Determine the number of empty indexes based on the length of the string, By using this logic
+    // the code ensures that the number of empty indexes is always appropriate for the length of the
+    //string, preventing cases where all characters are left blank and maintaining a playable game logic.
+    int numEmptyIndexes = min(3, separatedChars.length - 1);
 
     // Generate 3 random indexes to leave empty
     Random random = Random();
     emptyIndexes = [];
-    while (emptyIndexes.length < 3) {
+    while (emptyIndexes.length < numEmptyIndexes) {
       int index = random.nextInt(separatedChars.length);
       if (!emptyIndexes.contains(index) && separatedChars[index] != ' ') {
         emptyIndexes.add(index);
@@ -107,7 +111,12 @@ class SingleEducationNavigateToCubit
     String originalString = selectedAnswers[currentQuestionIndex];
 
     for (int index in emptyIndexes) {
-      if (controllers[index].text != originalString[index]) {
+      String userInput = controllers[index].text;
+      String normalizedUserInput = removeDiacritics(userInput).toLowerCase();
+      String normalizedOriginal =
+          removeDiacritics(originalString[index].toString().toLowerCase());
+
+      if (normalizedUserInput != normalizedOriginal) {
         isCorrect = false;
         break;
       }
@@ -129,6 +138,16 @@ class SingleEducationNavigateToCubit
       playWrongSound();
     }
   }
+
+  // Show current answer as text
+  void showCurrentAnswer() {
+    if (currentQuestionIndex < selectedAnswers.length) {
+      String currentAnswer = selectedAnswers[currentQuestionIndex];
+      emit(ShowCurrentAnswerSuccess(currentAnswer));
+      debugPrint(currentAnswer);
+    }
+  }
+  //------------------------
 
 //play sound when answer is correct
   final AudioPlayer _audioPlayer = AudioPlayer();

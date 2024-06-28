@@ -19,3 +19,10 @@ final class PrepareStringStateSucess extends SingleEducationNavigateToState {}
 
 //-----------------------------------------------------------------------------
 final class FinishQuizStateSucess extends SingleEducationNavigateToState {}
+//-----------------------------------------------------------------------------
+
+class ShowCurrentAnswerSuccess extends SingleEducationNavigateToState {
+  final String answer;
+
+  ShowCurrentAnswerSuccess(this.answer);
+}

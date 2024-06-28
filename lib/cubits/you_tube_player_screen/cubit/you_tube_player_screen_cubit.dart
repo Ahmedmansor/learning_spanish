@@ -16,6 +16,7 @@ class YouTubePlayerScreenCubit extends Cubit<YouTubePlayerScreenState> {
   List<ClosedCaption> subtitles = [];
   late Timer _timer;
   final ScrollController _scrollController = ScrollController();
+
 //loadSubtitles
   Future<void> loadSubtitles(String videoId) async {
     emit(YouTubePlayerLoadingSubtitles());

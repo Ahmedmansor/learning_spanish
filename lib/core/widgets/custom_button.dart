@@ -25,6 +25,7 @@ class CustomGeneralButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
+      padding: const EdgeInsets.all(15),
       onPressed: onTap,
       height: height,
       minWidth: AppSettings.width,

@@ -19,6 +19,7 @@ class CompleteStringQuizApp extends StatelessWidget {
       onPopInvoked: (didPop) {
         SingleEducationNavigateToCubit.get(context).selectedAnswers = [];
         SingleEducationNavigateToCubit.get(context).currentQuestionIndex = 0;
+        // SingleEducationNavigateToCubit.get(context).selectedQuestions = [];
 
         debugPrint('selectedAnswers = []');
       },
@@ -42,6 +43,7 @@ class CompleteStringQuizScreen extends StatelessWidget {
           if (state is FinishQuizStateSucess) {
             cubit.selectedAnswers = [];
             cubit.currentQuestionIndex = 0;
+            // cubit.selectedQuestions = [];
 
             Navigator.pop(context);
           }
@@ -53,14 +55,18 @@ class CompleteStringQuizScreen extends StatelessWidget {
               child: Column(
                 children: [
                   AppSettings.heightSpace(amountHeight: 0.02),
-                  FlutterStepIndicator(
-                    negativeColor: Colors.grey,
-                    positiveColor: kMainColor,
-                    progressColor: kMainColor,
-                    height: 20,
-                    list: cubit.selectedQuestions,
-                    onChange: (i) {},
-                    page: cubit.currentQuestionIndex,
+                  SizedBox(
+                    width: AppSettings.width,
+                    child: FlutterStepIndicator(
+                      negativeColor: Colors.grey,
+                      positiveColor: kMainColor,
+                      progressColor: kMainColor,
+                      height: cubit.selectedQuestions.length <= 11 ? 15 : 1,
+                      list: cubit.selectedQuestions,
+                      onChange: (i) {},
+                      page: cubit.currentQuestionIndex,
+                      division: cubit.selectedQuestions.length,
+                    ),
                   ),
                   AppSettings.heightSpace(amountHeight: 0.1),
                   Row(
@@ -97,12 +103,12 @@ class CompleteStringQuizScreen extends StatelessWidget {
                             maxLength: 1,
                             focusNode: cubit.focusNodes[index],
                             style: const TextStyle(
-                                fontSize: 24, fontWeight: FontWeight.bold),
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
                             decoration: const InputDecoration(
                               counterText: '',
                             ),
-
-                            //use on changed just to handel the cursor yo go to the next empty field
                             onChanged: (value) {
                               if (value.isNotEmpty) {
                                 int nextIndex = index + 1;
@@ -118,6 +124,16 @@ class CompleteStringQuizScreen extends StatelessWidget {
                                   FocusScope.of(context)
                                       .unfocus(); // Unfocus if no more empty fields
                                 }
+                              } else {
+                                int prevIndex = index - 1;
+                                while (prevIndex >= 0 &&
+                                    cubit.separatedChars[prevIndex] != '') {
+                                  prevIndex--;
+                                }
+                                if (prevIndex >= 0) {
+                                  FocusScope.of(context).requestFocus(
+                                      cubit.focusNodes[prevIndex]);
+                                }
                               }
                             },
                           ),
@@ -132,7 +148,9 @@ class CompleteStringQuizScreen extends StatelessWidget {
                             child: Text(
                               cubit.separatedChars[index],
                               style: const TextStyle(
-                                  fontSize: 24, fontWeight: FontWeight.bold),
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         );
@@ -141,31 +159,89 @@ class CompleteStringQuizScreen extends StatelessWidget {
                   ),
                   AppSettings.heightSpace(amountHeight: 0.1),
                   SizedBox(
-                    width: AppSettings.width * 0.16,
+                    width: AppSettings.width * 0.6,
                     child: CustomGeneralButton(
-                      // radius: 5,
-                      borderRadius: BorderRadius.circular(5),
-                      text: 'Hint',
-                      color: kMainColor.withOpacity(0.3),
-                      onTap: () {
-                        cubit.playHintSound();
-                        cubit.prepareString();
-                      },
-                      height: 15,
-                      fontSize: 16,
-                    ),
-                  ),
-                  SizedBox(
-                    width: AppSettings.width * 0.5,
-                    child: CustomGeneralButton(
-                      // radius: 16,
-                      borderRadius: BorderRadius.circular(16),
-
+                      borderRadius: const BorderRadius.only(
+                          topRight: Radius.circular(16),
+                          topLeft: Radius.circular(16)),
                       text: 'Next',
                       onTap: SingleEducationNavigateToCubit.get(context)
                           .checkAnswer,
                     ),
                   ),
+                  SizedBox(
+                    width: AppSettings.width * 0.6,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: SizedBox(
+                            child: CustomGeneralButton(
+                              borderRadius: const BorderRadius.only(
+                                  bottomLeft: Radius.circular(16)),
+                              text: 'Hint',
+                              color: kMainColor.withOpacity(0.5),
+                              onTap: () {
+                                cubit.playHintSound();
+                                cubit.prepareString();
+                              },
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: SizedBox(
+                            width: AppSettings.width,
+                            child: CustomGeneralButton(
+                              // radius: 16,
+                              borderRadius: const BorderRadius.only(
+                                  bottomRight: Radius.circular(16)),
+                              color: kMainColor.withOpacity(0.2),
+
+                              text: 'Show Answer',
+                              fontSize: 16,
+                              onTap: SingleEducationNavigateToCubit.get(context)
+                                  .showCurrentAnswer,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  BlocBuilder<SingleEducationNavigateToCubit,
+                          SingleEducationNavigateToState>(
+                      builder: (context, state) {
+                    if (state is ShowCurrentAnswerSuccess) {
+                      return Container(
+                        margin: const EdgeInsets.symmetric(vertical: 20),
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: kMainColor.withOpacity(0.7),
+                          borderRadius: BorderRadius.circular(15),
+                          boxShadow: [
+                            BoxShadow(
+                              color: kMainColor.withOpacity(0.6),
+                              spreadRadius: 7,
+                              blurRadius: 7,
+                              offset:
+                                  Offset(0, 3), // changes position of shadow
+                            ),
+                          ],
+                        ),
+                        child: Text(
+                          state.answer,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87,
+                            letterSpacing: 5,
+                          ),
+                        ),
+                      );
+                    } else {
+                      return const SizedBox();
+                    }
+                  }),
                 ],
               ),
             ),
