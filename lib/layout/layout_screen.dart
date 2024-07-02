@@ -12,16 +12,16 @@ class LayoutScreen extends StatelessWidget {
     return BlocBuilder<LayoutCubit, LayoutState>(
       builder: (context, state) {
         return Scaffold(
-          appBar: AppBar(
-            actions: [
-              Switch(
-                value: LayoutCubit.get(context).isDark,
-                onChanged: (value) {
-                  LayoutCubit.get(context).changeTheme();
-                },
-              ),
-            ],
-          ),
+          // appBar: AppBar(
+          //   actions: [
+          //     Switch(
+          //       value: LayoutCubit.get(context).isDark,
+          //       onChanged: (value) {
+          //         LayoutCubit.get(context).changeTheme();
+          //       },
+          //     ),
+          //   ],
+          // ),
           body:
               LayoutCubit.get(context).screens[LayoutCubit.get(context).index],
           bottomNavigationBar: MoltenBottomNavigationBar(
@@ -71,6 +71,15 @@ class LayoutScreen extends StatelessWidget {
                 ),
                 title: const Text(
                   'Settings',
+                ),
+              ),
+              MoltenTab(
+                icon: const Icon(
+                  Icons.bar_chart_sharp,
+                  size: 35,
+                ),
+                title: const Text(
+                  'Charts',
                 ),
               ),
             ],

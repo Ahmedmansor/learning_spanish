@@ -14,3 +14,9 @@ class VoiceChangedError extends SettingsState {}
 class SpeedChangedSuccess extends SettingsState {}
 
 class ChangeIconSttate extends SettingsState {}
+
+//-----------------------------------------------
+class IsSelectedVoiceItemChanged extends SettingsState {}
+
+//-----------------------------------------------
+class GetSelectedVoiceItemFunSucess extends SettingsState {}

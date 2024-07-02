@@ -25,7 +25,7 @@ class AppSettings {
 
   static SizedBox widthSpace({required double amountWidth}) {
     return SizedBox(
-      height: width * amountWidth,
+      width: width * amountWidth,
     );
   }
 }

@@ -3,10 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learning_spanish/core/utils/navigation.dart';
 import 'package:learning_spanish/core/widgets/custom_button.dart';
 import 'package:learning_spanish/views/discover/presentation/views/quiz_view.dart';
-import 'package:learning_spanish/views/settings/settings_screen.dart';
+import 'package:learning_spanish/views/settings/presentation/views/settings_screen.dart';
 // import 'package:rive_animated_icon/rive_animated_icon.dart';
 // import 'package:rive_animated_icon/rive_animated_icon.dart';
 import '../../../../../core/utils/app_settings.dart';
+import '../../../../../core/widgets/back_icon.dart';
 import '../../../../../cubits/settings/cubit/settings_cubit.dart';
 import '../../../../../cubits/single_education_navigate_to/cubit/single_education_navigate_to_cubit.dart';
 import '../../../../../repos/colors.dart';
@@ -59,6 +60,7 @@ class SingleEducationNavigateTo extends StatelessWidget {
                   )),
             )
           ],
+          leading: const BackIcon(),
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:learning_spanish/core/utils/app_settings.dart';
 import 'package:learning_spanish/core/utils/navigation.dart';
+import 'package:learning_spanish/repos/colors.dart';
 import 'package:learning_spanish/views/discover/presentation/views/widgets/education_listview_item.dart';
 import 'package:learning_spanish/views/discover/presentation/views/widgets/single_education_navigate_to.dart';
 
+import '../../../../../core/widgets/back_icon.dart';
 import '../../../data/models/education_item_model.dart';
 
 class SeeAllEducationScreen extends StatelessWidget {
@@ -16,8 +18,9 @@ class SeeAllEducationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Educations'),
+        title: const Text('See All'),
         centerTitle: true,
+        leading: const BackIcon(),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -35,6 +38,7 @@ class SeeAllEducationScreen extends StatelessWidget {
                       words: educationItems[index].words,
                       allAnswersList: educationItems[index].answers,
                       allquestionsList: educationItems[index].questions,
+                      videoId: educationItems[index].videoId,
                     ));
               },
             );

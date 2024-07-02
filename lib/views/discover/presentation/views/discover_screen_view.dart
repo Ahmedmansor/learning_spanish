@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:learning_spanish/core/utils/app_theme.dart';
 import 'package:learning_spanish/core/utils/navigation.dart';
 import 'package:learning_spanish/core/widgets/custom_button.dart';
 import 'package:learning_spanish/views/discover/presentation/views/widgets/see_all_education_screen.dart';
@@ -8,6 +10,7 @@ import 'package:learning_spanish/views/discover/presentation/views/widgets/singl
 
 import '../../../../core/utils/app_settings.dart';
 import '../../../../cubits/single_education_navigate_to/cubit/single_education_navigate_to_cubit.dart';
+import '../../../../layout/cubit/layout_cubit.dart';
 import '../../../../repos/colors.dart';
 import '../../data/models/education_item_model.dart';
 import 'widgets/alphabet_view.dart';
@@ -32,38 +35,37 @@ class DiscoverScreenView extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         children: [
           AppSettings.heightSpace(amountHeight: .01),
+          EducationPartInDiscoverScreenView(
+            singleEducationNavigateToCubit: singleEducationNavigateToCubit,
+            text: 'Learn with Music 🎵',
+            educationItemsmodel: songStory,
+          ),
           const Text(
             'Learn Alpaphet',
             style: TextStyle(
                 // color: Colors.white,
                 fontSize: 24,
                 fontWeight: FontWeight.bold),
-          ),
+          ).animate().fade(duration: 600.ms).slideY(delay: 100.ms),
           InkWell(
             onTap: () {
-              NavigationUtils.goTo(context, AlphabetView());
+              NavigationUtils.goTo(context, const AlphabetView());
             },
             child: Image.asset(
-              'assets/images/alphabet.jpg',
+              'assets/images/alphabet.png',
               width: AppSettings.width,
               height: AppSettings.height * .2,
               fit: BoxFit.fill,
             ),
-          ).animate().fade(duration: 500.ms).scale(delay: 500.ms),
-          AppSettings.heightSpace(amountHeight: .05),
+          ).animate().fade(duration: 500.ms).scale(),
+          AppSettings.heightSpace(amountHeight: .01),
           EducationPartInDiscoverScreenView(
             singleEducationNavigateToCubit: singleEducationNavigateToCubit,
             text: 'Education',
             educationItemsmodel: educationItems,
           ),
-          AppSettings.heightSpace(amountHeight: .01),
-          EducationPartInDiscoverScreenView(
-            singleEducationNavigateToCubit: singleEducationNavigateToCubit,
-            text: 'Learn with Music',
-            educationItemsmodel: songStory,
-          ),
         ],
-      ),
+      ).animate().fadeIn(duration: 600.ms, curve: Curves.easeIn),
     );
   }
 }
@@ -96,18 +98,31 @@ class EducationPartInDiscoverScreenView extends StatelessWidget {
             ),
             SizedBox(
               width: AppSettings.width * .2,
-              child: CustomGeneralButton(
-                text: 'See All',
-                fontSize: 16,
-                textColor: kMainColor,
-                onTap: () {
-                  NavigationUtils.goTo(
-                      context,
-                      SeeAllEducationScreen(
-                        educationItems: educationItemsmodel,
-                      ));
+              height: AppSettings.height * .05,
+              child: BlocBuilder<LayoutCubit, LayoutState>(
+                builder: (context, state) {
+                  return CustomGeneralButton(
+                    text: 'See All',
+                    fontSize: 16,
+                    textColor: LayoutCubit.get(context).isDark
+                        ? kMainColor
+                        : Colors.white,
+                    borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(16),
+                        topLeft: Radius.circular(16)),
+                    onTap: () {
+                      NavigationUtils.goTo(
+                          context,
+                          SeeAllEducationScreen(
+                            educationItems: educationItemsmodel,
+                          ));
+                    },
+                    // ignore: unrelated_type_equality_checks
+                    color: LayoutCubit.get(context).isDark
+                        ? Colors.black
+                        : kMainColor,
+                  );
                 },
-                color: Colors.grey[700],
               ),
             ),
           ],

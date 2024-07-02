@@ -9,6 +9,7 @@ environment:
 dependencies:
   audioplayers: ^6.0.0
   bloc: ^8.1.4
+  fl_chart: ^0.68.0
   flutter:
     sdk: flutter
   flutter_animate: ^4.5.0
@@ -16,10 +17,13 @@ dependencies:
   flutter_stepindicator: ^0.1.7
   flutter_tts: ^4.0.2
   fluttertoast: ^8.1.0
+  font_awesome_flutter: ^10.7.0
+  modal_bottom_sheet: ^3.0.0
   molten_navigationbar_flutter: ^1.0.1
   page_transition: ^2.1.0
   remove_diacritic: ^0.9.0
   rive_animated_icon: ^1.1.2
+  shared_preferences: ^2.2.3
   translator: ^1.0.0
   vibration: ^1.9.0
   youtube_explode_dart: ^2.2.1

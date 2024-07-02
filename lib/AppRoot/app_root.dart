@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learning_spanish/core/utils/app_settings.dart';
+import 'package:learning_spanish/cubits/charts/cubit/charts_cubit.dart';
 import 'package:learning_spanish/cubits/discover/cubit/discover_cubit.dart';
 import 'package:learning_spanish/cubits/translation/cubit/translation_cubit.dart';
 import 'package:learning_spanish/layout/cubit/layout_cubit.dart';
@@ -40,6 +41,9 @@ class AppRoot extends StatelessWidget {
         BlocProvider(create: (context) => YouTubePlayerScreenCubit()),
         BlocProvider(
           create: (context) => AlpphapetAnimationCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ChartsCubit(),
         ),
       ],
       child: BlocBuilder<LayoutCubit, LayoutState>(

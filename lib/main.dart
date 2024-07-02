@@ -1,13 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:learning_spanish/repos/shared_pref_helper.dart';
 
 import 'AppRoot/app_root.dart';
 
-void main() {
+// Timer? usageTimer;
+// void _trackAppUsage() async {
+//   final prefs = await SharedPreferences.getInstance();
+//   final now = DateTime.now();
+//   final key = 'appUsageMinutes_${now.weekday}';
+
+//   usageTimer = Timer.periodic(const Duration(minutes: 1), (timer) async {
+//     int minutes = prefs.getInt(key) ?? 0;
+//     prefs.setInt(key, minutes + 1);
+//   });
+// }
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await CachMemory.cachMemoryInit();
+  // _trackAppUsage();
   // FlutterTtsHelper.initTts(context);
 
   runApp(const AppRoot());
 }
+
 
 // import 'dart:async';
 
