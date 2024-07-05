@@ -1,0 +1,2 @@
+Platform  Firebase App Id
+android   1:795147119497:android:41fd84092bf2f691bc4f58

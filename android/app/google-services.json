@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "795147119497",
+    "project_id": "learn-spanish-with-music",
+    "storage_bucket": "learn-spanish-with-music.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:795147119497:android:2db46c2e6939f7cdbc4f58",
+        "android_client_info": {
+          "package_name": "com.example.learn_spanish_with_music"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVKIBiEhIFET_mM46BqwgyyMjsX5mrI1k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:795147119497:android:41fd84092bf2f691bc4f58",
+        "android_client_info": {
+          "package_name": "com.example.learning_spanish"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVKIBiEhIFET_mM46BqwgyyMjsX5mrI1k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

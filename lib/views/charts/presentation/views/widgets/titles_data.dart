@@ -1,13 +1,14 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:learning_spanish/repos/colors.dart';
 
 FlTitlesData get titlesData => const FlTitlesData(
       show: true,
       bottomTitles: AxisTitles(
-        axisNameWidget: Text('Days'),
+        // axisNameWidget: Text('Days'),
         sideTitles: SideTitles(
           showTitles: true,
           reservedSize: 30,
@@ -15,7 +16,10 @@ FlTitlesData get titlesData => const FlTitlesData(
         ),
       ),
       leftTitles: AxisTitles(
-        axisNameWidget: Text('Minutes'),
+        axisNameWidget: Text(
+          'Minutes',
+          style: TextStyle(fontSize: 18, letterSpacing: 5),
+        ),
         sideTitles: SideTitles(showTitles: false),
       ),
       topTitles: AxisTitles(

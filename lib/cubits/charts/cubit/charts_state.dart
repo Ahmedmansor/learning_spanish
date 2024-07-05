@@ -9,3 +9,6 @@ final class ChartsInitial extends ChartsState {}
 final class BarChartsLoaded extends ChartsState {}
 
 final class RefreshChartSucess extends ChartsState {}
+
+//-------------------------
+final class InitializeStreakState extends ChartsState {}

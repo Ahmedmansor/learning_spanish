@@ -1,4 +1,6 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:learning_spanish/firebase_options.dart';
 import 'package:learning_spanish/repos/shared_pref_helper.dart';
 
 import 'AppRoot/app_root.dart';
@@ -18,9 +20,11 @@ import 'AppRoot/app_root.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CachMemory.cachMemoryInit();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   // _trackAppUsage();
-  // FlutterTtsHelper.initTts(context);
 
+  // FlutterTtsHelper.initTts(context);
+  // CachMemory.insertIntToCachMemory(key: 'appUsageMinutes_2', value: 120);
   runApp(const AppRoot());
 }
 
