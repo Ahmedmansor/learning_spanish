@@ -5,8 +5,6 @@ import 'package:learning_spanish/cubits/charts/cubit/charts_cubit.dart';
 import 'package:learning_spanish/cubits/discover/cubit/discover_cubit.dart';
 import 'package:learning_spanish/cubits/translation/cubit/translation_cubit.dart';
 import 'package:learning_spanish/layout/cubit/layout_cubit.dart';
-import 'package:learning_spanish/repos/flutter_tts.dart';
-
 import '../cubits/discover/alphapet_animation/cubit/alphapet_animation_cubit.dart';
 import '../cubits/settings/cubit/settings_cubit.dart';
 import '../cubits/single_education_navigate_to/cubit/single_education_navigate_to_cubit.dart';

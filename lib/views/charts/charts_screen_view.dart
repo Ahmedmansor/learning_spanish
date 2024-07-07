@@ -1,18 +1,24 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:learning_spanish/core/utils/app_settings.dart';
 import 'package:learning_spanish/cubits/charts/cubit/charts_cubit.dart';
+import 'package:learning_spanish/repos/colors.dart';
 import 'package:learning_spanish/views/charts/presentation/views/widgets/bar_groups.dart';
 import 'package:learning_spanish/views/charts/presentation/views/widgets/titles_data.dart';
-
+import 'package:lottie/lottie.dart';
 import '../../repos/shared_pref_helper.dart';
 import 'presentation/views/widgets/bar_touch.dart';
+import 'presentation/views/widgets/streak_widget.dart';
+import 'presentation/views/widgets/total_and_average_widget.dart';
 
 class ChartsScreenView extends StatefulWidget {
+  const ChartsScreenView({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _ChartsScreenViewState createState() => _ChartsScreenViewState();
 }
 
@@ -62,42 +68,48 @@ class _ChartsScreenViewState extends State<ChartsScreenView>
     return Scaffold(
       body: BlocBuilder<ChartsCubit, ChartsState>(
         builder: (context, state) {
-          return Column(
-            children: [
-              Expanded(
-                  flex: 2,
-                  child: IconButton(
-                    onPressed: () {
-                      ChartsCubit.get(context).refreshChart();
-                    },
-                    icon: const Icon(
-                      FontAwesomeIcons.arrowsRotate,
-                      size: 30,
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const TotalAndAverageWidget(),
+                  AppSettings.heightSpace(amountHeight: 0.02),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: fivethhColor.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(8),
                     ),
-                  )),
-              Expanded(
-                flex: 1,
-                child: Container(
-                  margin: const EdgeInsets.all(16),
-                  child: AspectRatio(
-                    aspectRatio: 1.6,
-                    child: BarChart(
-                      swapAnimationDuration: const Duration(milliseconds: 1000),
-                      swapAnimationCurve: Curves.linear,
-                      BarChartData(
-                        alignment: BarChartAlignment.spaceAround,
-                        barGroups: barGroups,
-                        titlesData: titlesData,
-                        barTouchData: barTouch,
-                        gridData: const FlGridData(show: false),
-                        maxY: 20,
-                        borderData: FlBorderData(show: false),
+                    child: AspectRatio(
+                      aspectRatio: 1.6,
+                      child: BarChart(
+                        swapAnimationDuration:
+                            const Duration(milliseconds: 1000),
+                        swapAnimationCurve: Curves.linear,
+                        BarChartData(
+                          alignment: BarChartAlignment.spaceAround,
+                          barGroups: barGroups,
+                          titlesData: titlesData,
+                          barTouchData: barTouch,
+                          gridData: const FlGridData(show: false),
+                          maxY: maxYValue + 20,
+                          borderData: FlBorderData(show: false),
+                        ),
                       ),
                     ),
-                  ),
-                ),
+                  ).animate().move(
+                      duration: 500.ms,
+                      begin: const Offset(100, 0),
+                      end: const Offset(0, 0)),
+                  AppSettings.heightSpace(amountHeight: 0.02),
+                  const StreakWidget().animate().move(
+                      duration: 500.ms,
+                      begin: const Offset(0, 100),
+                      end: const Offset(0, 0)),
+                ],
               ),
-            ],
+            ),
           );
         },
       ),

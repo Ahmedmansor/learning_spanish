@@ -1,9 +1,7 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:learning_spanish/repos/colors.dart';
 
-import '../../../repos/shared_pref_helper.dart';
+import '../../../views/charts/data/models/streak_tracker.dart';
 import '../../../views/charts/presentation/views/widgets/bar_groups.dart';
 part 'charts_state.dart';
 
@@ -24,15 +22,15 @@ class ChartsCubit extends Cubit<ChartsState> {
 
     emit(RefreshChartSucess());
     debugPrint('refreshed');
-    debugPrint(
-        CachMemory.getIntFromCachMemory(key: 'appUsageMinutes_1').toString());
-    debugPrint(
-        CachMemory.getIntFromCachMemory(key: 'appUsageMinutes_2').toString());
-    debugPrint(
-        CachMemory.getIntFromCachMemory(key: 'appUsageMinutes_3').toString());
-    debugPrint(
-        CachMemory.getIntFromCachMemory(key: 'appUsageMinutes_4').toString());
-    debugPrint(
-        CachMemory.getIntFromCachMemory(key: 'appUsageMinutes_5').toString());
+  }
+
+  //Streak Widget Logic
+  int streakCount = 0;
+  final StreakTracker streakTracker = StreakTracker();
+  Future<void> initializeStreak() async {
+    await streakTracker.checkAndUpdateStreak();
+    final currentStreak = await streakTracker.getCurrentStreak();
+    emit(InitializeStreakState());
+    streakCount = currentStreak;
   }
 }
