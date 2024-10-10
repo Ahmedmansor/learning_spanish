@@ -5,19 +5,24 @@ class EducationItemModel {
   final List<String> answers;
   final List<String> questions;
   final String? videoId;
+  final Map? level;
+  final String? subtitleFile;
 
-  EducationItemModel({
-    required this.title,
-    required this.image,
-    required this.words,
-    required this.answers,
-    required this.questions,
-    required this.videoId,
-  });
+  EducationItemModel(
+      {required this.title,
+      required this.image,
+      required this.words,
+      required this.answers,
+      required this.questions,
+      required this.videoId,
+      required this.level,
+      required this.subtitleFile});
 }
 
 List<EducationItemModel> educationItems = [
   EducationItemModel(
+    subtitleFile: null,
+    level: null,
     title: 'school',
     image: 'assets/images/image1.jpg',
     words: [
@@ -39,6 +44,8 @@ List<EducationItemModel> educationItems = [
     videoId: null,
   ),
   EducationItemModel(
+    subtitleFile: null,
+    level: null,
     title: 'high school',
     image: 'assets/images/image2.jpg',
     words: [
@@ -60,6 +67,8 @@ List<EducationItemModel> educationItems = [
     videoId: null,
   ),
   EducationItemModel(
+    subtitleFile: null,
+    level: null,
     title: 'university',
     image: 'assets/images/image3.jpg',
     words: [
@@ -81,9 +90,97 @@ List<EducationItemModel> educationItems = [
     videoId: null,
   ),
 ];
-
+List<EducationItemModel> englishSongs = [
+  EducationItemModel(
+    subtitleFile: '',
+    level: {
+      'A1': '5%',
+      'A2': '10%',
+      'B1': '20%',
+      'B2': '30%',
+      'C1': '25%',
+      'C2': '10%',
+    },
+    title: 'Heartstrings and Goodbyes',
+    image: 'assets/images/Heartstrings and Goodbyes.jpg',
+    words: [
+      {
+        "Arabic": "لقد فعلت ذلك عمدا",
+        "english": "You did it on purpose",
+        "Example":
+            "If I didn't know better, I would say you did it on purpose.\n \nإذا لم أكن علي دراية، فسأقول إنك فعلت ذلك عن قصد"
+      },
+      {
+        "Arabic": "عواقب",
+        "english": "consequences",
+      },
+      {"Arabic": "حقيقية", "english": "Bona fide"},
+      {"Arabic": "تلعثم", "english": "Slurring"},
+      {"Arabic": "مشهور بسوء السمعة", "english": "notorious"},
+      {"Arabic": "اصبع السبابة", "english": "index finger"},
+      {"Arabic": "يهدئ", "english": "pacifies"},
+      {"Arabic": "امعاء", "english": "intestine"},
+      {"Arabic": "بكل صراحه", "english": "In all fairness"},
+      {"Arabic": "خوض و تعمق", "english": "Delving"},
+      {"Arabic": "مجنون", "english": "lunatic"},
+      {"Arabic": "بسخرية - باستهزاء", "english": "sarcastically"},
+      {"Arabic": "عدواني - محارب", "english": "Belligerent"},
+      {"Arabic": "قبيحة", "english": "unsightly"},
+      {"Arabic": "خشنة - علقة", "english": "snagged"},
+      {"Arabic": "خطر تهديد", "english": "Threat"},
+      {"Arabic": "بشدة - بقوة", "english": "Fiercely"},
+      {"Arabic": "فائض", "english": "Surplus"},
+      {"Arabic": "تراكم - تجمع", "english": "Accumulated"}
+    ],
+    questions: [
+      "لقد فعلت ذلك عمدا",
+      "عواقب",
+      "حقيقية",
+      "تلعثم",
+      "مشهور بسوء السمعة",
+      "اصبع السبابة",
+      "يهدئ",
+      "امعاء",
+      "بكل صراحه",
+      "خوض و تعمق",
+      "مجنون",
+      "بسخرية - باستهزاء",
+      "عدواني - محارب",
+      "قبيحة",
+      "خشنة - علقة",
+      "خطر تهديد",
+      "بشدة - بقوة",
+      "فائض",
+      "تراكم - تجمع"
+    ],
+    answers: [
+      "You did it on purpose",
+      "consequences",
+      "Bona fide",
+      "Slurring",
+      "notorious",
+      "index finger",
+      "pacifies",
+      "intestine",
+      "In all fairness",
+      "Delving",
+      "lunatic",
+      "sarcastically",
+      "Belligerent",
+      "unsightly",
+      "snagged",
+      "Threat",
+      "Fiercely",
+      "Surplus",
+      "Accumulated"
+    ],
+    videoId: 'null',
+  ),
+];
 List<EducationItemModel> songStory = [
   EducationItemModel(
+      subtitleFile: null,
+      level: null,
       title: 'Princesa Luna',
       image: 'assets/images/luna.jpg',
       videoId: 'gTMyBHJ4x7g',
@@ -622,6 +719,8 @@ List<EducationItemModel> songStory = [
         "reino",
       ]),
   EducationItemModel(
+    subtitleFile: null,
+    level: null,
     title: 'days of the week',
     image: 'assets/images/days of the week.jpg',
     videoId: "wedzbdCzh58",
@@ -867,6 +966,8 @@ List<EducationItemModel> songStory = [
     ],
   ),
   EducationItemModel(
+    subtitleFile: null,
+    level: null,
     title: 'Numbers 0 - 12',
     image: 'assets/images/1-12.jpg',
     videoId: "92FXJKWCjHE",
@@ -1172,6 +1273,8 @@ List<EducationItemModel> songStory = [
     ],
   ),
   EducationItemModel(
+    subtitleFile: null,
+    level: null,
     title: 'Months Of The Year',
     image: 'assets/images/Months of the year.jpg',
     videoId: '7GsPJGQjc8Q',

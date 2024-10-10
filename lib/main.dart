@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_awesome_bottom_sheet/flutter_awesome_bottom_sheet.dart';
+// import 'package:learning_spanish/core/networking/firebase_notification.dart';
 import 'package:learning_spanish/firebase_options.dart';
 import 'package:learning_spanish/repos/shared_pref_helper.dart';
 
@@ -21,9 +23,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CachMemory.cachMemoryInit();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // FirebaseNotification().initializeNotifications();
   // _trackAppUsage();
 
-  // FlutterTtsHelper.initTts(context);
+  // FlutterTtsHelper.initTts(context);f
   // CachMemory.insertIntToCachMemory(key: 'appUsageMinutes_2', value: 120);
   runApp(const AppRoot());
 }

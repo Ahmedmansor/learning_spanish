@@ -38,7 +38,7 @@ class DiscoverScreenView extends StatelessWidget {
           EducationPartInDiscoverScreenView(
             singleEducationNavigateToCubit: singleEducationNavigateToCubit,
             text: 'Learn with Music 🎵',
-            educationItemsmodel: songStory,
+            educationItemsmodel: englishSongs,
           ),
           const Text(
             'Learn Alpaphet',
@@ -139,6 +139,7 @@ class EducationPartInDiscoverScreenView extends StatelessWidget {
               return EducationListViewItem(
                 title: educationItemsmodel[index].title,
                 image: educationItemsmodel[index].image,
+                level: educationItemsmodel[index].level,
                 onTap: () {
                   NavigationUtils.goTo(
                       context,
@@ -148,6 +149,7 @@ class EducationPartInDiscoverScreenView extends StatelessWidget {
                         allquestionsList: educationItemsmodel[index].questions,
                         allAnswersList: educationItemsmodel[index].answers,
                         videoId: educationItemsmodel[index].videoId,
+                        subtitleFile: educationItemsmodel[index].subtitleFile,
                       ));
                   // NavigationUtils.offScreen(context);
                   singleEducationNavigateToCubit.clearSelectedQuestions();

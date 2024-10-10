@@ -87,7 +87,7 @@ class SettingScreen extends StatelessWidget {
                                                   },
                                                   itemCount: context
                                                       .read<SettingsCubit>()
-                                                      .voices
+                                                      .realVoices
                                                       .length,
                                                   itemBuilder:
                                                       (context, index) {
@@ -193,7 +193,7 @@ class VoiceItemBuilder extends StatelessWidget {
                           context.read<SettingsCubit>().voices[index]);
 
                       settingsCubit.setSpeed(0.5);
-                      settingsCubit.speak('Learn Spanish With Music');
+                      settingsCubit.speak('How you doin, dude?');
 
                       settingsCubit.isSelectedVoiceItemFun(index);
                       //save selected voice

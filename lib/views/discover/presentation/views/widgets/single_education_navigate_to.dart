@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_awesome_bottom_sheet/flutter_awesome_bottom_sheet.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learning_spanish/core/utils/navigation.dart';
 import 'package:learning_spanish/core/widgets/custom_button.dart';
 import 'package:learning_spanish/views/discover/presentation/views/quiz_view.dart';
+import 'package:learning_spanish/views/discover/presentation/views/song_screen.dart';
 import 'package:learning_spanish/views/settings/presentation/views/settings_screen.dart';
 // import 'package:rive_animated_icon/rive_animated_icon.dart';
 // import 'package:rive_animated_icon/rive_animated_icon.dart';
@@ -21,12 +23,14 @@ class SingleEducationNavigateTo extends StatelessWidget {
     required this.allquestionsList,
     required this.allAnswersList,
     this.videoId,
+    required this.subtitleFile,
   });
   final String title;
   final List<Map<dynamic, dynamic>> words;
   final List<String> allquestionsList;
   final List<String> allAnswersList;
   final String? videoId;
+  final String? subtitleFile;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +41,7 @@ class SingleEducationNavigateTo extends StatelessWidget {
           allquestionsList: allquestionsList,
           allAnswersList: allAnswersList,
           videoId: videoId,
+          subtitleFile: subtitleFile,
         ),
         appBar: AppBar(
           centerTitle: true,
@@ -94,12 +99,14 @@ class BottomNavBar extends StatelessWidget {
     required this.allquestionsList,
     required this.allAnswersList,
     this.videoId,
+    required this.subtitleFile,
   });
 
   final SingleEducationNavigateToCubit cubit;
   final List<String> allquestionsList;
   final List<String> allAnswersList;
   final String? videoId;
+  final String? subtitleFile;
 
   @override
   Widget build(BuildContext context) {
@@ -162,6 +169,26 @@ class BottomNavBar extends StatelessWidget {
                     },
                   ),
                 ),
+                if (subtitleFile != null)
+                  Expanded(
+                    child: CustomGeneralButton(
+                      textColor: Colors.black,
+                      color: kMainColor,
+                      // radius: 8,
+                      borderRadius: BorderRadius.only(
+                        topRight: videoId != null
+                            ? const Radius.circular(0)
+                            : const Radius.circular(24),
+                        // bottomRight: Radius.circular(8),
+                      ),
+                      text: 'Listen',
+                      onTap: () {
+                        NavigationUtils.goTo(context, SongWithLyrics());
+
+                        cubit.playHintSound();
+                      },
+                    ),
+                  ),
                 if (videoId != null)
                   Expanded(
                     child: CustomGeneralButton(
@@ -170,7 +197,6 @@ class BottomNavBar extends StatelessWidget {
                       // radius: 8,
                       borderRadius: const BorderRadius.only(
                         topRight: Radius.circular(24),
-                        // bottomRight: Radius.circular(8),
                       ),
                       text: 'Watch Video',
                       onTap: () {
@@ -208,27 +234,58 @@ class SingleEducationListViewItem extends StatelessWidget {
     var singleEducationNavigateToCubit =
         SingleEducationNavigateToCubit.get(context);
 
+    final AwesomeBottomSheet awesomeBottomSheet = AwesomeBottomSheet();
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        SizedBox(
-          width: AppSettings.width * .3,
-          child: Text(
-            words[index]['english'],
-            style: const TextStyle(
-              fontSize: 18,
+        GestureDetector(
+          onTap: () {
+            awesomeBottomSheet.show(
+              context: context,
+              title: Text(words[index]['english'] ?? 'Default Title'),
+              description:
+                  Text(words[index]['Example'] ?? 'No example provided.'),
+              color: CustomSheetColor(
+                mainColor: Colors.black,
+                accentColor: kMainColor,
+                iconColor: Colors.white,
+              ),
+              iconSize: 50,
+              icon: Icons.apps_rounded,
+              radiusTopRight: 30,
+              positive: AwesomeSheetAction(
+                onPressed: () {
+                  // Navigator.of(context).pop();
+                  BlocProvider.of<SettingsCubit>(context).setSpeed(0.5);
+                  BlocProvider.of<SettingsCubit>(context)
+                      .speak(words[index]['Example']);
+                },
+                title: 'Listen',
+                icon: Icons.record_voice_over_outlined,
+              ),
+            );
+          },
+          child: SizedBox(
+            width: AppSettings.width * .35,
+            child: Text(
+              words[index]['english'],
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.start,
             ),
           ),
         ),
         SizedBox(
           width: AppSettings.width * .3,
           child: Text(
-            words[index]['espanol'],
+            words[index]['Arabic'],
             style: const TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.bold,
             ),
-            textAlign: TextAlign.start,
+            textAlign: TextAlign.right,
           ),
         ),
         Row(
@@ -239,10 +296,10 @@ class SingleEducationListViewItem extends StatelessWidget {
               builder: (context, state) {
                 return CheckBox(
                   value: singleEducationNavigateToCubit.selectedQuestions
-                      .contains(words[index]['english']),
+                      .contains(words[index]['Arabic']),
                   onChanged: (newValue) {
                     singleEducationNavigateToCubit.updateValue(
-                        newValue!, words[index]['english']);
+                        newValue!, words[index]['Arabic']);
                   },
                 );
               },
@@ -269,13 +326,13 @@ class SingleEducationListViewItem extends StatelessWidget {
               onLongPress: () {
                 BlocProvider.of<SettingsCubit>(context).setSpeed(0.1);
                 BlocProvider.of<SettingsCubit>(context)
-                    .speak(words[index]['espanol']);
+                    .speak(words[index]['english']);
               },
               child: IconButton(
                   onPressed: () {
                     BlocProvider.of<SettingsCubit>(context).setSpeed(0.5);
                     BlocProvider.of<SettingsCubit>(context)
-                        .speak(words[index]['espanol']);
+                        .speak(words[index]['english']);
                   },
                   icon: const Icon(Icons.record_voice_over_outlined)),
               // child: RiveAnimatedIcon(

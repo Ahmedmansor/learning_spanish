@@ -19,28 +19,34 @@ class SettingsCubit extends Cubit<SettingsState> {
 
   static SettingsCubit get(context) => BlocProvider.of(context);
   List<RealVoicesModel> realVoices = [
-    RealVoicesModel(name: 'Stella', sex: 'Female', location: 'United States'),
+    RealVoicesModel(name: 'Stella', sex: 'Male', location: 'United Kingdom'),
     RealVoicesModel(name: 'Serena', sex: 'Female', location: 'United States'),
-    RealVoicesModel(name: 'Stella', sex: 'Female', location: 'United States'),
-    RealVoicesModel(name: 'Apollo', sex: 'Male', location: 'United States'),
-    RealVoicesModel(name: 'Diego', sex: 'Male', location: 'Spain'),
-    RealVoicesModel(name: 'Luna', sex: 'Female', location: 'Spain'),
-    RealVoicesModel(name: 'Valentina', sex: 'Female', location: 'Spain'),
-    RealVoicesModel(name: 'Maverick', sex: 'Male', location: 'United States'),
+    RealVoicesModel(name: 'Hans', sex: 'Male', location: 'United Kingdom'),
+    RealVoicesModel(name: 'Stella', sex: 'Female', location: 'United Kingdom'),
+    RealVoicesModel(name: 'Diego', sex: 'Female', location: 'United States'),
+    RealVoicesModel(name: 'Luna', sex: 'Female', location: 'United Kingdom'),
+    RealVoicesModel(name: 'Jack', sex: 'Male', location: 'United States'),
+    RealVoicesModel(name: 'Maverick', sex: 'Female', location: 'United States'),
+    RealVoicesModel(name: 'Leo', sex: 'Female', location: 'United Kingdom'),
     RealVoicesModel(name: 'Aurora', sex: 'Female', location: 'United States'),
-    RealVoicesModel(name: 'Axel', sex: 'Male', location: 'United States'),
     RealVoicesModel(name: 'Jasmine', sex: 'Female', location: 'United States'),
-    RealVoicesModel(name: 'Luna', sex: 'Female', location: 'Spain'),
-    RealVoicesModel(name: 'Mateo', sex: 'Male', location: 'Spain'),
-    RealVoicesModel(name: 'Sophia', sex: 'Female', location: 'Spain'),
-    RealVoicesModel(name: 'Alejandro', sex: 'Male', location: 'United States'),
-    RealVoicesModel(name: 'Valeria', sex: 'Female', location: 'Spain'),
-    RealVoicesModel(name: 'Isabella', sex: 'Female', location: 'Spain'),
-    RealVoicesModel(name: 'Bruno', sex: 'Male', location: 'Spain'),
+    RealVoicesModel(name: 'Luna', sex: 'Female', location: 'United Kingdom'),
+    RealVoicesModel(name: 'Dana', sex: 'Female', location: 'United States'),
+    RealVoicesModel(name: 'Mateo', sex: 'Male', location: 'United Kingdom'),
+    RealVoicesModel(name: 'Sophia', sex: 'Female', location: 'United Kingdom'),
+    RealVoicesModel(name: 'Valeria', sex: 'Female', location: 'United States'),
+    RealVoicesModel(name: 'Marco', sex: 'Male', location: 'United Kingdom'),
+    RealVoicesModel(name: 'Bruno', sex: 'Male', location: 'United Kingdom'),
+    RealVoicesModel(name: 'Adam', sex: 'Male', location: 'United States'),
+    RealVoicesModel(name: 'Marry', sex: 'Female', location: 'United States'),
+    RealVoicesModel(name: 'Porter', sex: 'Male', location: 'UUnited States'),
+    RealVoicesModel(name: 'Martin', sex: 'Male', location: 'United States'),
+    RealVoicesModel(name: 'Alexa', sex: 'Female', location: 'United Kingdom'),
+    RealVoicesModel(name: 'Jack', sex: 'Male', location: 'United States'),
   ];
 
   initTts() {
-    initializeTts('es-US');
+    initializeTts('en');
   }
 
   Future<void> initializeTts(
@@ -51,10 +57,14 @@ class SettingsCubit extends Cubit<SettingsState> {
     // await _flutterTts.setSpeechRate(speed);
     await _flutterTts.setPitch(1.0);
     await _flutterTts.setVolume(1.0);
+    await _flutterTts.isLanguageAvailable(languageCode);
     await _flutterTts.getVoices.then(
       (data) {
         voices = List.from(data);
-        voices = voices.where((v) => v['name'].contains('es')).toList();
+        voices = voices
+            .where((v) =>
+                v['name'].contains('en-gb') || v['name'].contains('en-us'))
+            .toList();
         debugPrint("_voices $voices");
         currentVoice = currentVoice ??
             voices[CachMemory.getIntFromCachMemory(key: 'selectedVoiceIndex')!];

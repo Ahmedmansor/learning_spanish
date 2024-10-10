@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:learning_spanish/core/utils/app_settings.dart';
 import 'package:learning_spanish/core/utils/navigation.dart';
@@ -30,6 +32,7 @@ class SeeAllEducationScreen extends StatelessWidget {
             return EducationListViewItem(
               image: educationItems[index].image,
               title: educationItems[index].title,
+              level: educationItems[index].level,
               onTap: () {
                 NavigationUtils.goTo(
                     context,
@@ -39,6 +42,7 @@ class SeeAllEducationScreen extends StatelessWidget {
                       allAnswersList: educationItems[index].answers,
                       allquestionsList: educationItems[index].questions,
                       videoId: educationItems[index].videoId,
+                      subtitleFile: educationItems[index].subtitleFile,
                     ));
               },
             );
