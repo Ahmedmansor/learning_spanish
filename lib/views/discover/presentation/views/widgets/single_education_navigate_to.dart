@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learning_spanish/core/utils/navigation.dart';
 import 'package:learning_spanish/core/widgets/custom_button.dart';
 import 'package:learning_spanish/views/discover/presentation/views/quiz_view.dart';
-import 'package:learning_spanish/views/discover/presentation/views/song_screen.dart';
+import 'package:learning_spanish/views/discover/presentation/views/song_with_lyrics.dart';
 import 'package:learning_spanish/views/settings/presentation/views/settings_screen.dart';
 // import 'package:rive_animated_icon/rive_animated_icon.dart';
 // import 'package:rive_animated_icon/rive_animated_icon.dart';
@@ -24,6 +24,7 @@ class SingleEducationNavigateTo extends StatelessWidget {
     required this.allAnswersList,
     this.videoId,
     required this.subtitleFile,
+    required this.songName,
   });
   final String title;
   final List<Map<dynamic, dynamic>> words;
@@ -31,17 +32,20 @@ class SingleEducationNavigateTo extends StatelessWidget {
   final List<String> allAnswersList;
   final String? videoId;
   final String? subtitleFile;
+  final String? songName;
 
   @override
   Widget build(BuildContext context) {
     var cubit = SingleEducationNavigateToCubit.get(context);
     return Scaffold(
         bottomNavigationBar: BottomNavBar(
+          title: title,
           cubit: cubit,
           allquestionsList: allquestionsList,
           allAnswersList: allAnswersList,
           videoId: videoId,
           subtitleFile: subtitleFile,
+          songName: songName,
         ),
         appBar: AppBar(
           centerTitle: true,
@@ -100,13 +104,17 @@ class BottomNavBar extends StatelessWidget {
     required this.allAnswersList,
     this.videoId,
     required this.subtitleFile,
+    required this.songName,
+    required this.title,
   });
 
   final SingleEducationNavigateToCubit cubit;
+  final String title;
   final List<String> allquestionsList;
   final List<String> allAnswersList;
   final String? videoId;
   final String? subtitleFile;
+  final String? songName;
 
   @override
   Widget build(BuildContext context) {
@@ -183,9 +191,15 @@ class BottomNavBar extends StatelessWidget {
                       ),
                       text: 'Listen',
                       onTap: () {
-                        NavigationUtils.goTo(context, SongWithLyrics());
-
-                        cubit.playHintSound();
+                        cubit.playHintSound().then((_) {
+                          NavigationUtils.goTo(
+                              context,
+                              SongWithLyricsScreen(
+                                songName: songName,
+                                subtitleFile: subtitleFile,
+                                title: title,
+                              ));
+                        });
                       },
                     ),
                   ),

@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_awesome_bottom_sheet/flutter_awesome_bottom_sheet.dart';
 // import 'package:learning_spanish/core/networking/firebase_notification.dart';
 import 'package:learning_spanish/firebase_options.dart';
 import 'package:learning_spanish/repos/shared_pref_helper.dart';

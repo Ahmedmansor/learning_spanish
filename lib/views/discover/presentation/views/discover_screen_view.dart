@@ -150,6 +150,7 @@ class EducationPartInDiscoverScreenView extends StatelessWidget {
                         allAnswersList: educationItemsmodel[index].answers,
                         videoId: educationItemsmodel[index].videoId,
                         subtitleFile: educationItemsmodel[index].subtitleFile,
+                        songName: educationItemsmodel[index].songName,
                       ));
                   // NavigationUtils.offScreen(context);
                   singleEducationNavigateToCubit.clearSelectedQuestions();

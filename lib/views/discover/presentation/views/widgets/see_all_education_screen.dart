@@ -43,6 +43,7 @@ class SeeAllEducationScreen extends StatelessWidget {
                       allquestionsList: educationItems[index].questions,
                       videoId: educationItems[index].videoId,
                       subtitleFile: educationItems[index].subtitleFile,
+                      songName: educationItems[index].songName,
                     ));
               },
             );

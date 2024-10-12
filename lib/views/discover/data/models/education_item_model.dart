@@ -7,6 +7,7 @@ class EducationItemModel {
   final String? videoId;
   final Map? level;
   final String? subtitleFile;
+  final String? songName;
 
   EducationItemModel(
       {required this.title,
@@ -16,12 +17,14 @@ class EducationItemModel {
       required this.questions,
       required this.videoId,
       required this.level,
-      required this.subtitleFile});
+      required this.subtitleFile,
+      required this.songName});
 }
 
 List<EducationItemModel> educationItems = [
   EducationItemModel(
     subtitleFile: null,
+    songName: null,
     level: null,
     title: 'school',
     image: 'assets/images/image1.jpg',
@@ -45,6 +48,7 @@ List<EducationItemModel> educationItems = [
   ),
   EducationItemModel(
     subtitleFile: null,
+    songName: null,
     level: null,
     title: 'high school',
     image: 'assets/images/image2.jpg',
@@ -67,6 +71,7 @@ List<EducationItemModel> educationItems = [
     videoId: null,
   ),
   EducationItemModel(
+    songName: null,
     subtitleFile: null,
     level: null,
     title: 'university',
@@ -92,7 +97,8 @@ List<EducationItemModel> educationItems = [
 ];
 List<EducationItemModel> englishSongs = [
   EducationItemModel(
-    subtitleFile: '',
+    subtitleFile: 'assets/lyrics/Heartstrings and Goodbyes.srt',
+    songName: 'songs/Heartstrings and Goodbyes.mp3',
     level: {
       'A1': '5%',
       'A2': '10%',
@@ -180,6 +186,7 @@ List<EducationItemModel> englishSongs = [
 List<EducationItemModel> songStory = [
   EducationItemModel(
       subtitleFile: null,
+      songName: null,
       level: null,
       title: 'Princesa Luna',
       image: 'assets/images/luna.jpg',
@@ -720,6 +727,7 @@ List<EducationItemModel> songStory = [
       ]),
   EducationItemModel(
     subtitleFile: null,
+    songName: null,
     level: null,
     title: 'days of the week',
     image: 'assets/images/days of the week.jpg',
@@ -967,6 +975,7 @@ List<EducationItemModel> songStory = [
   ),
   EducationItemModel(
     subtitleFile: null,
+    songName: null,
     level: null,
     title: 'Numbers 0 - 12',
     image: 'assets/images/1-12.jpg',
@@ -1274,6 +1283,7 @@ List<EducationItemModel> songStory = [
   ),
   EducationItemModel(
     subtitleFile: null,
+    songName: null,
     level: null,
     title: 'Months Of The Year',
     image: 'assets/images/Months of the year.jpg',
