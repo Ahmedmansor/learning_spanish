@@ -97,7 +97,9 @@ List<EducationItemModel> educationItems = [
 ];
 List<EducationItemModel> englishSongs = [
   EducationItemModel(
+    // subtitleFile: 'assets/lyrics/1-Intro MAIN.srt',
     subtitleFile: 'assets/lyrics/Heartstrings and Goodbyes.srt',
+
     songName: 'songs/Heartstrings and Goodbyes.mp3',
     level: {
       'A1': '5%',

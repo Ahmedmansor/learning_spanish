@@ -5,7 +5,7 @@ import 'package:learning_spanish/core/utils/app_settings.dart';
 import 'package:learning_spanish/core/utils/navigation.dart';
 import 'package:learning_spanish/repos/colors.dart';
 import 'package:learning_spanish/views/discover/presentation/views/widgets/education_listview_item.dart';
-import 'package:learning_spanish/views/discover/presentation/views/widgets/single_education_navigate_to.dart';
+import 'package:learning_spanish/views/discover/presentation/views/single_education_navigate_to.dart';
 
 import '../../../../../core/widgets/back_icon.dart';
 import '../../../data/models/education_item_model.dart';

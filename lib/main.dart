@@ -30,7 +30,6 @@ void main() async {
   runApp(const AppRoot());
 }
 
-
 // import 'dart:async';
 
 // import 'package:flutter/material.dart';

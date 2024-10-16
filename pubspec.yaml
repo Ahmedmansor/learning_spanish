@@ -8,6 +8,7 @@ environment:
 
 dependencies:
   audioplayers: ^6.1.0
+  auto_size_text: ^3.0.0
   bloc: ^8.1.4
   firebase_core: ^3.1.1
   firebase_messaging: ^15.0.2
@@ -52,4 +53,5 @@ flutter:
     - assets/songs/
     - assets/lyrics/Heartstrings and Goodbyes.srt
     - assets/lyrics/Heartstrings and Goodbyes - Arabic.srt
-
+    - assets/lyrics/1-Intro MAIN.srt
+    

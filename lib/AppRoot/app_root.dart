@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learning_spanish/core/utils/app_settings.dart';
 import 'package:learning_spanish/cubits/charts/cubit/charts_cubit.dart';
 import 'package:learning_spanish/cubits/discover/cubit/discover_cubit.dart';
-import 'package:learning_spanish/cubits/songWithLyrics/cubit/song_with_lyrics_cubit.dart';
 import 'package:learning_spanish/cubits/translation/cubit/translation_cubit.dart';
 import 'package:learning_spanish/layout/cubit/layout_cubit.dart';
 import '../cubits/discover/alphapet_animation/cubit/alphapet_animation_cubit.dart';

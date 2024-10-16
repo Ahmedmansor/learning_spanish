@@ -1,11 +1,13 @@
 1
 00:00:10,200 --> 00:00:16,000
-you did it on purpose I can see it in your eye
+you did it on purpose I can see it in your eye.
+لقد فعلت ذلك عن قصد، أستطيع أن أرى ذلك في عينيك
 
 
 2
 00:00:16,000 --> 00:00:22,133
 bona fide no disguise no more goodbyes
+صدق، لا تمويه، لا مزيد من الوداع
 
 
 3

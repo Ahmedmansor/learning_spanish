@@ -14,7 +14,6 @@ class EducationListViewItem extends StatelessWidget {
   final String title;
   final String image;
   final Map? level;
-
   final void Function()? onTap;
   @override
   Widget build(BuildContext context) {

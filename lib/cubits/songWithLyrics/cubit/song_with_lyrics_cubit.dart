@@ -37,6 +37,8 @@ class SongWithLyricsCubit extends Cubit<SongWithLyricsState> {
 
   Future<void> _loadEngSubtitles() async {
     try {
+      emit(SongWithLyricsSubtitlesLoading());
+
       final data = await rootBundle.loadString(subtitleFile);
       // 'assets/lyrics/Heartstrings and Goodbyes.srt'
       final lines = data.split('\n');

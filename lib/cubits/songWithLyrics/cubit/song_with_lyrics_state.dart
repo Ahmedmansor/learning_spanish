@@ -10,6 +10,8 @@ class SongWithLyricsSubtitlesLoaded extends SongWithLyricsState {
   SongWithLyricsSubtitlesLoaded(this.subtitles);
 }
 
+class SongWithLyricsSubtitlesLoading extends SongWithLyricsState {}
+
 class SongWithLyricsPositionChanged extends SongWithLyricsState {
   final Duration position;
 
